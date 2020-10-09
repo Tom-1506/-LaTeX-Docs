@@ -133,6 +133,29 @@ closely to glean more details that could aid my progress.
 
 \pagebreak
 \section{Proposed Approaches}
+My chosen approach for implementation will be using C++ to create an OpenGL module 
+that can then be used as part of an existing OpenGL project. \\
+At this early stage of the project I am unsure of the exact algorithmic method I 
+will be using but I know the general process I will likely follow. \\
+The tree trunk and branches will need to use some sort of random walk algorithm that 
+takes into account the length and angle of growth of the parent branches. Some unit 
+of randomness will have to be used to help produce realistic looking trees while 
+following this process. Since I hope to create trees that will be seen to have grown 
+around obstacles the random walk will also have to take obstacles into account and 
+have a method to avoid them. \\
+After the trunk and branches are fully constructed I will need a method of applying 
+a correct thickness of the branches to the skeleton that I constructed using the 
+random walk. I am currently unaware of whether it will be more beneficial to add 
+thickness to the branches as the tree is constructed or if it will be easier to add 
+after the entire skeleton is finished. \\
+After the branches are finished completely I will need a method of adding leaves to 
+the tree. Due to leaves only growing on further out branches I will need to have 
+some method of distinguishing between the trunk of the tree and the branches. I don't 
+know yet how I will add the leaves specifically. The likely approach would be to add 
+a premade leaf model to parts of the branch using a chosen algorithm to decide their 
+distribution. I have yet to fully understand the algorithms suggested in the paper I 
+mentioned earlier \cite{colonization} but I will continue to research the possible 
+methods.
 
 \pagebreak
 \section{Risks}
