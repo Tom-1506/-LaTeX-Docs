@@ -19,15 +19,21 @@
 Generating natural environments can be costly. Creating and rendering realistic 
 models of trees can be challenging. The aim of this project is to investigate 
 approaches for creating and rendering trees to be used in a real-time graphics 
-application.
+application. A key reason for wanting to include trees in computer generated 
+environments is that trees, and other foliage, are what give life to that 
+environment, a forest is not a forest without the trees and having an easy method 
+of including trees in a landscape will mean that making that landscape more 
+realistic and engaging is easier.
 
 \section{Description of Project}
 
 \subsection{Aims}
 The aim of this project is to create an OpenGL module for constructing and rendering 
-trees for use in 3D environments such as games. The trees that are constructed should 
-look relatively realistic and the rendering process should make effective use of the 
-GPU to be as efficient as possible.
+trees for use in 3D environments such as games. The trees that are constructed should:
+be rendered at least in 30fps (ideally 60fps), the module should take input from the 
+user allowing them to vary the appearance of the trees that are generated so that the 
+trees do not all look the same and the rendering process should make effective use of 
+the GPU to be as efficient as possible.
 
 \subsection{Motivation}
 The motivation for creating this project is to make the addition of trees into a 3D 
@@ -55,14 +61,14 @@ The user could choose to either make their own trees or acquire premade assets:
 
 My solution would help solve these problems by allowing an automatic construction 
 for the trees to avoid any modeling by the user and, by including modifiable parameters 
-the user can tweak, they could produce whatever tree they want for their scene.
+the user can tweak, they could produce many different looking trees for their scene.
 
-\pagebreak
+
 \section{Preliminary Work to Identify Resources}
 
 \subsection{Market Analysis}
-As part of analysing this project I have researched some similar software solutions 
-that are already available on the market.
+The following section details some of the existing software solutions available for 
+producing 3d models of trees.
 
 \subsubsection{SpeedTree 3D Vegetation Modeling}
 SpeedTree \cite{speedtree} is an advanced software suite that is used for large projects 
@@ -84,9 +90,8 @@ or avoiding buildings and many others.
 
 \pagebreak
 \subsection{Method Analysis}
-I have also researched some existing methods used to construct trees and how they 
-relate to the scope of this project. I have also included research into general 
-GPU accelerated rendering as I believe that will also be useful information.
+This section contains reviews of some methods used for constructing trees found in 
+literature and how they relate to the aims of my project.
 
 \subsubsection{Modeling Trees with a Space Colonization Algorithm}
 The paper \cite{colonization} is a wealth of knowledge on the construction of trees. 
