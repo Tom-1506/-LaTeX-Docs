@@ -126,7 +126,26 @@ subject.
 The branching structure of rendered trees is the most commonly talked about subject 
 across most papers relating to rendering trees. This is likely because the branch 
 structure is most important with regards to making a tree look realistic, therefore 
-it becomese the main focus of most relevant papers.
+it becomese the main focus of most relevant papers. \par
+\cite{10.1145/218380.218427} provides a systematic algorithm based solution for 
+producing trees through many variables tweaked to produce the required tree, they 
+even provide some values you can use for producing certain species that have been 
+produced using their method. A comparable paper \cite{4497899} gives a different 
+method but both share the basic axiom of reducing branch length and width with a 
+given ratio to the ``parent'' branch then giving the ``child'' branch an angle 
+derived from the angle of the ``parent'' using some tweaked randomness. Something 
+that \cite{4497899} mentions that the other paperA doesn't is the inclusion of 
+obstacle avoidance by pushing the branches away from a given collider. This paper 
+also allows for the modelling of tree growth in heavy wind which can be used to 
+create more varied trees for certain environment, \cite{10.1145/218380.218427} 
+provides a method for wind sway using a form of elastic bending applied to the 
+branches. A combination of methods from these two papers would likely produce a 
+good result for this projects purposes. \par
+\cite{colonization} focuses more on the controlled formation of the trees branches 
+giving target points within a ``pruning envelope''. This envelope method is also 
+given in \cite{10.1145/218380.218427} and is used to prevent the growth of a tree 
+outside of a given collider, this is done to encourage a trees branches to grow 
+into a certain desired shape
 
 \subsubsection{Leaf Placement}
 
