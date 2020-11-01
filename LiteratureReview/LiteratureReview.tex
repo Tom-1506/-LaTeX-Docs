@@ -181,10 +181,64 @@ A later paper by \cite{weber2008simulation} presents another similar constructio
 to those mentioned above but with more attention paid to the possible simulation of the 
 rendered trees. He puts forward a method for branches avoiding obstacles using collisions 
 with environment objects, this is done by pushing any branches that collide with the given 
-object away from its bounding area by changing their branching angles.
+object away from its bounding area by changing their branching angles. This addition 
+of realism for the tree growth moving around obstacles can help the trees feel more 
+integrated with the environment they are placed into. Weber also begins to talk about 
+the simulation of tree movements with respect to wind which will be discussed in a 
+later section.
 
 \subsubsection{Leaf Placement}
+Leaf placement on tree models has seen many different methods applied over the years 
+of development of graphical hardware. The chosen method of leaf placement for the 
+rendering of a tree is coupled with the chosen branch structure method so that the 
+leaves can be placed realistically along the branches giving the best possible result. \par
+The earliest example comes with the L-systems method discussed in the previous section, 
+proposed by \cite{lindenmayer1968mathematical} and discussed by \cite{prusinkiewicz1996systems}, 
+where some of the variables chosen from the ``alphabet'' of possible permutations will 
+include the drawing of branches and then leafs to go along with them, no direct method is 
+proposed for how these leaves would be rendered however as these papers discuss mostly with 
+turtle graphics but some of the methods about to be mentioned could likely be used in 
+the L-system variables to render the leaves. \par
+\cite{weber1995rendering} present leaf placement as part of their overall algorithm using 
+a level system for the recursive construction of the tree. Leaves are more densely populated 
+on greater levels of the tree and the number of leaves per branch at each level is determined 
+by a formula using some inputted variables to achieve various appearances. Weber and Penn 
+also suggest an alteration to the orientation of the leaves after placement so that the leaves 
+will face the light correctly. The rendering method chosen for the leaves is that there is a 
+given set of simple geometric leaf shapes to choose from using an id called ``LeafShape'' 
+these shapes range from a simple oval to more detailed split maple style leaves. This reduces 
+the realistic looks of the tree as the leaves will not be textured but the rendering process 
+will be very fast using such simple shapes. \par
+\cite{wesslen2005real} actually directly uses the method given by \cite{weber1995rendering} 
+but makes a change to the leaf rendering process. Rather than use simple geometric shapes 
+to represent the leaves, the leaves are modeled using textured primitives meaning that the 
+quality of the leaves will look better when viewed from up close as compared to a plain 
+shape from Weber and Penn's original model. This obviously comes with the large time gap 
+between the two papers allowing for the use of more advanced hardware. \par
+\cite{runions2007colonization} uses a different method to choose leaf placement but tries 
+to achieve the same affect as Weber and Penn. They say that the spatial distribution of the 
+leaves is determined with respect to the parallel transport frame and/or absolute directions 
+in the world space in which the tree has been placed so that leaves can be placed along the 
+branches curves while remaining parallel with respect to the connection (NEEDS CLARIFICATION). 
+\par
+\cite{bloomenthal1985modeling} uses an interesting method for the leaf structure on his tree 
+models, to note he his focussing on only maple trees, by having the leaves use a polygon that 
+is hinged along the weaker sections of the leaf which allows for the shape to be varied 
+depending on the strength of a hypothetical wind. Bloomenthal also clusters leaves together 
+into what he calls leaf ``configurations'' and for each limb that does not exceed a given 
+diameter and that has no outgoing limbs, a leaf configuration is chosen at random, scaled 
+randomly and placed at the limb tip. This method is obviously limited as it is made specifically 
+for maple trees but the ideas used could be transfered to other methods to add depth.\par
+\cite{candussi2005rendering} discusses leaf placement with more of a focus on level of detail 
+management but will be discussed here for completeness. Candussi et al. choose to represent 
+leaves on the tree models using billboarding where various flat polygons are layered throughout 
+the tree crown and then given a texture containing multiple leaves to give the look of a 
+densely populated tree. This method is similar in execution to \cite{bloomenthal1985modeling} 
+but much simpler as it does not use separate polygons for each leave which saves geometry.
 
+\subsubsection{Wind Affect}
+
+\subsubsection{Detail Management}
 
 \clearpage
 \bibliography{bibfile}
