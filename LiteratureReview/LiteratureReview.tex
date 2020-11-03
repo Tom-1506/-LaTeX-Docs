@@ -173,7 +173,7 @@ cone method presented by Weber and Penn that may look too artificial. Bloomentha
 also suggests the use of splines instead of lines, for the branches, to make the trees 
 look more natural. \par
 A common part of the methods posed by both \cite{weber1995rendering} and 
-\cite{runions2007colonization} that hasn't been mentioned is the use of a terminal 
+\cite{runions2007colonization} that has not been mentioned is the use of a terminal 
 enveloping of the tree skeleton to prevent the branches from growing out too far or to 
 restrict the tree crown into a preferred shape, Prusinkiewicz et al. refer to this as 
 just an envelope whereas Weber and Penn call this overall method ``Pruning''. \par
@@ -237,6 +237,10 @@ densely populated tree. This method is similar in execution to \cite{bloomenthal
 but much simpler as it does not use separate polygons for each leave which saves geometry.
 
 \subsubsection{Wind Affect}
+The affect that wind has on a tree model can have a large impact on the realism of that model 
+by adding a living element to the model rather than just having a static object. The chosen 
+method for adding wind affects is not tied to the methods chosen for branch structure or leaf 
+placement so supposedly any method could be used for the chosen branch and leaf methods.
 \cite{weber1995rendering} model wind affecting trees as bending the branch segments by using 
 the deflection of an elastic rod with a circular cross-section fixed on one end with a 
 uniformly distributed force applied. The consider the rod as a pendulum and each branch is 
@@ -245,7 +249,18 @@ given a slightly varied oscillation to give a natural looking sway to the tree. 
 flutter which they model as a quick rotation around the spine of each leaf and in heavy 
 wind the tree will sway using a rotation from the base of the trunk, the rotation amount will 
 be relative to the distance from the base of the trunk so that further, thinner branches will 
-sway more than the nearer, thicker branches. \par
+sway more than the nearer, thicker branches. This differs from Weber and Penn's method with the 
+introduction of leaf movement, however their method of branch movement where each branch 
+sways independantly will likely produce a more realistic result when compared to the method 
+described above.\par
+\cite{candussi2005rendering} model their trees differently again, with pre-computed animation 
+properties, such as the flexibility of the branches. At run-time the tips of the branches are 
+displaced and the rest of the branch movement is done by applying the same transformation to 
+each vertex in the branch with alteration based on each vertices distance from the tip. The 
+displacement of the branch tips are computed using the sum of two vectors, one in the direction 
+of the wind and the other being orthogonal to the first to add some noise to the movement. 
+When compared to the methods of Weber and Penn or Wessl{\'e}n et al. this method would allow 
+more control over the branch movement by using the target and noise vectors rather than rotations.\par
 \cite{weber2008simulation} and \cite{bloomenthal1985modeling} both give the ability to apply 
 affects of wind to their tree models but they are different from the previously mentioned methods 
 in that they are not actively animated once rendered, the described wind affects they present 
@@ -253,15 +268,10 @@ are for adding to static models. Weber allows for the branch structure to be for
 as though it grew under the pressure of heavy wind which would add to an environment that is 
 meant to be under those conditions. Bloomenthal gives his leaf polygons hinge points to allow 
 for the leaves to deform to show wind affect but does not describe a method for having this 
-be an active animation rather than just an addition to producing a static model. \par 
-\cite{candussi2005rendering} model their trees with pre-computed animation properties, such as 
-the flexibility of the branches. At run-time the tips of the branches are displaced and the rest 
-of the branch movement is done by applying the same transformation to each vertex in the branch 
-with alteration based on each vertices distance from the tip. The displacement of the branch tips 
-are computed using the sum of two vectors, one in the direction of the wind and the other 
-being orthogonal to the first to add some noise to the movement.
+be an active animation rather than just an addition to producing a static model.
 
 \subsubsection{Detail Management}
+
 
 \clearpage
 \bibliography{bibfile}
