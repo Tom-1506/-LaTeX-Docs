@@ -271,7 +271,33 @@ for the leaves to deform to show wind affect but does not describe a method for 
 be an active animation rather than just an addition to producing a static model.
 
 \subsubsection{Detail Management}
-
+When rendering any scene in a real-time environment there needs to be attention paid to the 
+performance of the program, care needs to be given to the rendering methods to allow for a 
+smooth framerate (30fps or higher, ideally 60fps). This is done by reducing the details that 
+get rendered when they wont have any affect on the perceived detail of the scene and due to 
+the large amount of geometry involved in tree rendering, it is important to understand what  
+measures can be taken in the rendering process to improve the performance of whatever 
+environment they are placed in. \par
+\cite{weber1995rendering} discusses this issue of ``degradation at range'' and mentions the 
+commonly used method for most 3d models where multiple versions of the model are stored, 
+each of a varying level of fidelity, and depending on the distance of the camera from the 
+object a certain version of the model is chosen that will give enough detail to look realistic 
+but remove any details that would be impossible to see from that distance. The issue with this 
+method that Weber and Penn bring up is that, with trees in a forest environment, this method 
+would cause there to be very apparent ``resolution waves'' in the forest canopy that would not 
+be acceptable when trying to make the scene look realistic. Instead of this method they propose 
+that the separate levels of the tree models be simplified using a finer method that reduces 
+detail more gradually sometimes one facet at a time. The tree geometry is organized into 
+discrete geometric descriptions: 3 stem levels and the leaves. Any stems beyond the third 
+level are grouped with the third level. The deeper levels of stems are rarely visible from a 
+distance due to being obscured by the leaves. Weber and Penn refer to \cite{oppenheimer1986real} 
+that he recognised the use of polygonal tubes for large scale details and lines for smaller 
+details. Over increasing distance, the rendering algorithm reinterprets the geometry by 
+changing stem meshes into lines and leaf polygons into points and then at even longer ranges 
+some stems and leaves will completely disappear. 
+Weber and Penn's speculations on LOD were from 1995 however. In more recent years the problem 
+with apparent ``resolution waves'' has been worked on to produce better detail degredation that 
+doesn't show the obvious drops in detail throughout an environment. 
 
 \clearpage
 \bibliography{bibfile}
