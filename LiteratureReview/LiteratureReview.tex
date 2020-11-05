@@ -164,10 +164,10 @@ causes the branches to grow towards the points until all points are reached or a
 chosen number of iterations is completed. The method referenced by Prusinkiewicz 
 et al. for giving the tree skeleton thickness is from \cite{bloomenthal1985modeling} 
 where the branches of the tree skeleton are treated as the centre point of many 
-generalized cyclinders with varying radii, this requires the tree skeleton construction 
+generalized cylinders with varying radii, this requires the tree skeleton construction 
 method to include the data for normals along sections of the branches so that the 
-cyclinders can be constructed properly. \par
-This method of generalized cyclinders could be applied to an implementation of Honda's 
+cylinders can be constructed properly. \par
+This method of generalized cylinders could be applied to an implementation of Honda's 
 method or a chosen L-system to give those trees thickness, avoiding the use of the 
 cone method presented by Weber and Penn that may look too artificial. Bloomenthal 
 also suggests the use of splines instead of lines, for the branches, to make the trees 
@@ -219,7 +219,7 @@ between the two papers allowing for the use of more advanced hardware. \par
 to achieve the same affect as Weber and Penn. They say that the spatial distribution of the 
 leaves is determined with respect to the parallel transport frame and/or absolute directions 
 in the world space in which the tree has been placed so that leaves can be placed along the 
-branches curves while remaining parallel with respect to the connection (NEEDS CLARIFICATION). 
+branches curves while remaining parallel with respect to the connection. 
 \par
 \cite{bloomenthal1985modeling} uses an interesting method for the leaf structure on his tree 
 models, to note he his focussing on only maple trees, by having the leaves use a polygon that 
@@ -294,10 +294,25 @@ distance due to being obscured by the leaves. Weber and Penn refer to \cite{oppe
 that he recognised the use of polygonal tubes for large scale details and lines for smaller 
 details. Over increasing distance, the rendering algorithm reinterprets the geometry by 
 changing stem meshes into lines and leaf polygons into points and then at even longer ranges 
-some stems and leaves will completely disappear. 
-Weber and Penn's speculations on LOD were from 1995 however. In more recent years the problem 
-with apparent ``resolution waves'' has been worked on to produce better detail degredation that 
-doesn't show the obvious drops in detail throughout an environment. 
+some stems and leaves will completely disappear. \par
+Weber and Penn's speculations on LOD {Level Of Detail} were from 1995 however. In more recent 
+years the problem with apparent ``resolution waves'' has been worked on to produce better 
+detail degradation that doesn't show the obvious drops in detail throughout an environment. 
+\cite{candussi2005rendering} proposed the classic LOD approach with some alterations to make 
+changes in detail smoother across large areas. They reduce detail of cylindrical objects, 
+the trunk for example, by lowering the number of radial and longitudinal subdivisions. 
+Elements that are completely hidden by leaves or other parts of the tree can be completely 
+removed on lower LODs. They use grid meshes to approximate smaller branches and in lower 
+LODs they reduce the subdivisions of those meshes. The billboarding used for the leaves is 
+degraded by reducing the detail of the billboard texture and increasing the billboard size, 
+this is done using a slow fade between each LOD to avoid the popping affect described by 
+Weber and Penn. The slow fade is achieved by assigning random alpha values for the billboard 
+texture pixels and then varying the alpha comarison value for the alpha test. When compared 
+to \cite{weber1995rendering} this shows the advancement in relevant technology over the 10 
+year gap between both papers, improvement in graphical processing allows for more resources 
+to be used for the regular LOD method therefore allowing it to produce a more realistic result. 
+Avoiding the need for more advanced techniques like the degradation technique used by Weber and 
+Penn.
 
 \clearpage
 \bibliography{bibfile}
