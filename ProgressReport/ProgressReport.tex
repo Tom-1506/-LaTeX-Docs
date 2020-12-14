@@ -77,8 +77,7 @@ semi-randomly while taking into account the position of the tree.
 
 \section{Design and Planning}
 As a simulation project this design plan will give a design of the chosen simulation model 
-supported by example pseudo code and diagrams.
-
+supported by example pseudo code and diagrams.\\
 
 The chosen simulation model for this project is the use of L-systems which has been loosely 
 explained but will be described in more detail here.
@@ -89,41 +88,77 @@ symbol into some larger string of symbols. The expansion starts from an initial 
 which is some chosen collection of symbols, changing the axiom string is a way to alter the 
 resulting string without changing any of the symbols or rules involved in the system. The 
 number of times you apply the rules to the string (number of recursions) will also give you 
-different strings, and a chosen recursion depth may be chosen to give a desired affect.\\
+different strings, and a certain recursion depth may be chosen to give a desired affect.\\
 
-Below is an example of a very basic L-system which can model a fractal tree:\\
+\cite{prusinkiewicz1996systems} outlined multiple examples of using L-systems and below is 
+a simplified explanantion of one of them and how it could be modified to correspond to this 
+project.
 
-\noindent \textbf{variables:} 0, 1 \\
-\textbf{constants:} [, ] \\
-\textbf{axiom:} 0 \\
-\textbf{rules:} (1 $\rightarrow$ 11), (0 $\rightarrow$ 1[0]0) \\
+For the production of trees with some user input required we would want to use parametric 
+L-systems. The example explained below is that of a deterministic L-system (D0L-system) which 
+would produce the same result every time it was ran. This is not what we want for the context 
+of randomly generating trees so this method would likely be altered to become semi-deterministic 
+with certain randomness in generation being added into the construction process. 
 
-which will produce: \\
+Considering the recognisable snowflake fractal we can define the multiple recursions of its 
+formation using a D0L-system with this Axiom and the given Production: \\
 
-\noindent \textbf{axiom:} 0 \\
-\textbf{1st recursion:} 1[0]0 \\
-\textbf{2nd recursion:} 11[1[0]0]1[0]0 \\
-\textbf{3rd recursion:} 1111[11[1[0]0]1[0]0]11[1[0]0]1[0]0 \\
+\textbf{Axiom} $\omega$: $F(1) - (120)F(1) - (120)F(1)$ \\
+\indent \textbf{Production} $p_1$: $F(s) \rightarrow F(s/3) + (60)F(s/3) - (120)F(s/3) + (60)F(s/3)$ \\
 
-\pagebreak
-If we take each variable from this string and apply a graphics drawing command to each 
-variable to construct a tree by traversing the string left to right using the commands below: \\
-
-\noindent \textbf{0:} draw a line segment ending in a leaf \\
-\textbf{1:} draw a line segment \\
-\textbf{[:} push position and angle, turn left 45 degrees \\
-\textbf{]:} pop position and angle, turn right 45 degrees \\
-
-This example uses turtle graphics as an example due to the simplicity of the L-system but this 
-same method could be applied to 3D graphics with a more complex set of system variables 
-defining 3D geometry. We could also include more possible variables in our alphabet to 
-allow for a varied structure for the tree.\\
+The axiom draws an equilateral triangle with edges of unit length. Productiuon $p_1$ replaces 
+each line segment with a polygonal shape where the line segment has been given a convex 
+triangular shape. The Production $p_1$ can be visualised as so:
 
 \begin{figure}[h]
-        \includegraphics[scale=0.75]{l-system}
-        \caption{The axiom and results of the first 3 recursions of the example L-system}
+        \includegraphics[scale=0.4]{production_p1}
         \centering
 \end{figure}
+
+\noindent Below are the axiom and first 3 recursions of this D0L-system:
+
+\begin{figure}[h]
+        \includegraphics[scale=0.5]{triangle_snowflake_lsystem}
+        \centering
+\end{figure}
+
+This basic example provides the foundation to elaborate on the planned design for the tree 
+construction of this project. A semi-deterministic D0L-system will be produced that will 
+allow for the generation of a general branching structure. This would be done by assigning 
+3D line drawing to the symbols in our L-system that would be formed into a string. This could 
+be done by building from a root point and expanding the tree branches upwards, or by starting 
+with a central trunk and separating it into branches in a similar way to how the triangular 
+snowflake L-system works.
+
+The chosen symbols would represent differing thicknesses of branches as the tree expands from 
+the central trunk and some symbols would include the requirement for leafs to be placed, at 
+which point the chosen leaf placement method would be used to complete the branch. 
+
+Once an acceptable default for the D0L-system has been achieved, the system can be parameterised 
+to allow for user alterations of the tree generation which could include facets such as average 
+branch length, number of branch splits, leaf density, tree height and width etc.
+
+To add some random variance to the appearance of the generated trees there can be some semi 
+controlled symbols that will only slightly alter the trees overall appearance. This could 
+include a variation in branching angle to prevent each branch from being perfectly angled 
+from it's parent. This symbol could also be parameterised to allow user control by letting 
+there be a choice over what range this angle deviates.
+
+The issue of adding thickness to the tree branches can also be combined with the L-system 
+implementation. Below are some examples from another parametric L-system explained by 
+\cite{prusinkiewicz1996systems} 
+
+\begin{figure}[h]
+        \includegraphics[scale=0.7]{tree_examples}
+        \centering
+\end{figure}
+
+These trees are generated using another D0L-system that includes a parameter to increase the 
+width of branch segments over each recursion which can be seen most apparently in the two 
+trees on the left with their wider trunks and much thinner terminating branches. This same 
+method could be applied to this project by using cylinders for each branch segment instead of 
+line drawing. This would also allow for easier application of texturing to each branch as they 
+will all be formed using the same shape.
 
 \clearpage
 \bibliography{bibfile}
