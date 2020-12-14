@@ -1,7 +1,9 @@
-\documentclass[12pt]{article}
+\documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
 
-\title{Project Notes}
+\title{GPU Accelerated Method for Constructing and Rendering Trees 
+        \\ - \\ 
+        Project Notebook}
 \author{Thomas Mcloughlin - 100203952}
 \date{02 / 10 / 2020}
 
@@ -18,7 +20,8 @@ I did that week and how it will help my project progress.
 This week I was introduced to the expectations for the project. I have started by 
 scheduling a meeting with Stephen Laycock, my supervisor, and starting off my project 
 proposal by doing some market research of similar software and reading some papers 
-covering the subject of constructing trees using algorithms. \par
+covering the subject of constructing trees using algorithms.
+
 I have not yet decided any approach for the project due to being unsure what kind of 
 aims I should be making, after my meeting with Stephen on the 5th I will hopefully 
 know what route to be going down for the project.
@@ -31,7 +34,8 @@ created. There are many avenues of complexity I can go down but at the moment I 
 decided that my focus will be to have the branch creation be as realistic as possible 
 and hopefully include some sort of obstacle avoidance system wherever the tree grows.
 I have scheduled another meeting with Stephen for the same time next week on the 12th 
-where we have agreed I should have completed the project proposal for review. \par
+where we have agreed I should have completed the project proposal for review.
+
 Nearing the end of the week I have completed my project proposal and sent it to 
 Stephen for him to review and discuss in our meeting on the 12th. I have fleshed out 
 more of my thoughts towards how I should approach the project.
@@ -42,7 +46,8 @@ proposal and we discussed moving on to the literature review. His comments about
 proposal were very useful and his advice for the literature review has helped me 
 understand the structure that I should use when writing it. I will be focusing on 
 bringing together and comparing the content of multiple papers with respect to specific 
-parts of my project such as tree branch construction or leaf placement etc. \par
+parts of my project such as tree branch construction or leaf placement etc.
+
 The end of the week was used to start the introduction to my literature review where 
 I described the project and discussed the required knowledge for completion of the 
 project.
@@ -53,29 +58,83 @@ the literature review and how to improve it, along with how I should proceed wit
 rest of the document. I have a better understanding of how I will be approaching the 
 rest of the literature review now. I have also downloaded several papers related to 
 the project that I will use for my comparisons in the rest of the document, I hope to 
-have it finished by my next meeting with Stephen on the 26th. \par
+have it finished by my next meeting with Stephen on the 26th.
+
 Progress on the document did not proceed as quickly as I would have hoped. After 
 evaluating the papers I downloaded I found that a few were not strictly relevant to 
 the project and so had to remove them, leaving me with less content to use. Other 
 obstacles prevented much work being done on the literature review but it is not 
 expected until the end of next week so I am still on target.
 
-\section{Week 5, 26th Oct - 1st Nov}
+\section*{Week 5, 26th Oct - 1st Nov}
 This weeks meeting with Stephen wasn't as productive as I would've hoped due to me not 
 making as much progress on the literature review as I wanted to. We discussed some of 
 the upcoming sections in the review giving me a better understanding of what I should 
-consider for content. \par 
+consider for content.
+
 The second half of this week proved quite productive where I managed to write a lot 
 of content relating to branch structure, leaf placement and wind affect with respect 
 to various papers. This process has greatly improved my understanding of many of the 
 key areas of knowledge that will be required in the design and implementation stage.
 
-\section{Week 6, 2nd Nov - 8th Nov}
+\section*{Week 6, 2nd Nov - 8th Nov}
 This weeks meeting was used to discuss the content I had written in the latter half of 
 Week 5. Unfortunately the review was not finished for the end of Week 5 but good progress 
-has been made and I will be able to finish it in the next couple of days. \par
+has been made and I will be able to finish it in the next couple of days.
+
 I have now completed the literature review and sent off my final draft to Stephen, the 
 last content added was a comparison of work related to detail management with tree models, 
-such as different approaches to LOD dropoff, and then a simple conclusion. \par 
+such as different approaches to LOD dropoff, and then a simple conclusion.
+
+\section*{Week 6, 2nd Nov - 8th Nov}
+During this weeks meeting Stephen and I discussed how I should proceed into the design and 
+planning stage of the project and that including beginning to experiment with opengl 3D 
+programming.
+
+I have been making progress understanding some basics with opengl 3D programming 
+gathering together the fundamentals for creating an application such as opening a window and 
+setting clear colour. 
+
+I will continue working to understand the general requirements for producing an opengl 
+application during this week.
+
+\section*{Week 7, 9th Nov - 15th Nov}
+This week I have continued with more basic progress with the opengl application being able 
+to load in objects and apply textures. I have also continued general research on various 
+tree related 3D rendering methods to further my understanding. I have mostly been focussing 
+on the work of Przemysław Prusinkiewicz as his various work covers most facets of this subject.
+
+\section*{Week 8, 16th Nov - 22nd Nov}
+This week has been slower than previous as I have started working on producing generated shapes 
+in my opengl application. I will need some sort of struct to generate lines for my branch 
+structure that can be loaded in from certain points. 
+
+I will continue to work on this and make as much progress as possible while beginning to write 
+up the progress report for the project.
+
+\section*{Week 9, 23rd Nov - 29th Nov}
+This week I have been working on getting more general facets of the opengl application working 
+such as a basic lighting setup and gaining a more thorough view of the opengl rendering 
+pipeline which has helped me with understanding how the application should be written.
+
+I have made decent progress on the progress report having added the introduction and the 
+explanation for the problems of branch structure and leaf placement.
+
+\section*{Week 10, 30th Nov - 6th Dec}
+In this weeks meeting I received feedback from Stephen about the report and opengl program 
+helping me understand how I should progress from here. 
+
+I will be continuing to work on the progress report more having started on the design and 
+planning stage of the report where I will discuss the method of L-systems. 
+
+\section*{Week 11, 7th Dec - 13th Dec}
+In this weeks meeting with Stephen we discussed the design and planning section I had started 
+about L-systems. After some discussion we decided that I should rewrite this section with more 
+detail for the L-system description.
+
+I have done further research into L-systems while looking to write the design and planning stage 
+and learned more about how I could possibly approach the implementation stage. I will likely 
+change my design from using lines as a skeleton and then applying thickness afterwards. To 
+producing an L-system that accounts for thickness of branches by using cylinders instead of lines.
 
 \end{document}
