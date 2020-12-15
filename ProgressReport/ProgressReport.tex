@@ -149,16 +149,36 @@ implementation. Below are some examples from another parametric L-system explain
 \cite{prusinkiewicz1996systems} 
 
 \begin{figure}[h]
-        \includegraphics[scale=0.7]{tree_examples}
+        \includegraphics[scale=0.6]{tree_examples}
         \centering
 \end{figure}
 
 These trees are generated using another D0L-system that includes a parameter to increase the 
-width of branch segments over each recursion which can be seen most apparently in the two 
-trees on the left with their wider trunks and much thinner terminating branches. This same 
+width of branch segments over each recursion which can be seen most apparently in the trees 
+$a, b, d$ and $e$ with their wider trunks and much thinner terminating branches. This same 
 method could be applied to this project by using cylinders for each branch segment instead of 
 line drawing. This would also allow for easier application of texturing to each branch as they 
-will all be formed using the same shape.
+will all be formed using the same shape. \\ 
+
+The implementation of the project aims will be as follows. Producing an OpenGL module 
+that can be used to insert the tree models into any OpenGL environment. This would consist of 
+a separate ``tree'' struct that would be given parameters to create the tree, these parameters 
+would include: 
+
+\begin{itemize}
+        \item Global x, y, z coordinates for the positioning of the tree, the point given being 
+              the base of the tree trunk.
+        \item Maximum tree height and width, to limit how far the branch structure will spread 
+              before being pruned.
+        \item The angles between parent and child branches along with the range of variance 
+              of those angles.
+        \item The length and thickness of branches along with constants to determine the gradual 
+              decrease in length and thickness for each recursion.
+        \item The minimum length for a viable branch which will serve as a cut off point for the 
+              recursion algorithm.
+        \item Finally a parameter for directly controlling recursion depth in case the previous 
+              parameter does not give the desired results.
+\end{itemize}
 
 \clearpage
 \bibliography{bibfile}
