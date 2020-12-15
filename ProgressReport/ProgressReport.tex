@@ -115,14 +115,14 @@ triangular shape. The Production $p_1$ can be visualised as so:
         \centering
 \end{figure}
 
-\noindent Below are the axiom and first 3 recursions of this D0L-system:
-
 \begin{figure}[h]
         \includegraphics[scale=0.5]{triangle_snowflake_lsystem}
         \centering
+        \caption{The axiom and first 3 recursions defined by the snowflake D0L-system from 
+                 \cite{prusinkiewicz1996systems} pg.12}
 \end{figure}
 
-This basic example provides the foundation to elaborate on the planned design for the tree 
+Figure 1 gives a basic example providing the foundation to elaborate on the planned design for the tree 
 construction of this project. A semi-deterministic D0L-system will be produced that will 
 allow for the generation of a general branching structure. This would be done by assigning 
 3D line drawing to the symbols in our L-system that would be formed into a string. This could 
@@ -149,11 +149,13 @@ implementation. Below are some examples from another parametric L-system explain
 \cite{prusinkiewicz1996systems} 
 
 \begin{figure}[h]
-        \includegraphics[scale=0.6]{tree_examples}
+        \includegraphics[scale=0.49]{tree_examples}
         \centering
+        \caption{Some example tree constructions showing the results of a parametric D0L-system,  
+                 altered from \cite{prusinkiewicz1996systems} pg.14}
 \end{figure}
 
-These trees are generated using another D0L-system that includes a parameter to increase the 
+The trees in Figure 2 are generated using another D0L-system that includes a parameter to increase the 
 width of branch segments over each recursion which can be seen most apparently in the trees 
 $a, b, d$ and $e$ with their wider trunks and much thinner terminating branches. This same 
 method could be applied to this project by using cylinders for each branch segment instead of 
@@ -179,6 +181,19 @@ would include:
         \item Finally a parameter for directly controlling recursion depth in case the previous 
               parameter does not give the desired results.
 \end{itemize}
+
+After the research carried out in the literature review the decision has been made to change 
+some aspects of the chosen approach, the most impactful of which has been the method of branch 
+structure. The initial plan for branch construction was to follow the method presented by 
+\cite{runions2007colonization} to produce a line-drawn tree skeleton and then apply the method 
+of generalised cylinders described by \cite{bloomenthal1985modeling}. 
+
+After further research 
+into the area of L-systems the decision has been made to forgo using these methods with the 
+benefit of being able to represent the skeleton and branch thickness of the tree within a single 
+L-system as described above. This will still produce acceptable looking tree models while 
+reducing the overall complexity of the process, meaning that the construction and rendering 
+process will be less resource intensive and therefore make real-time applications more stable.
 
 \clearpage
 \bibliography{bibfile}
