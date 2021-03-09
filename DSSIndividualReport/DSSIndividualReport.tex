@@ -1,0 +1,42 @@
+\documentclass{ueacmpstyle}
+
+\RequirePackage{natbib}
+\usepackage{graphicx,caption}
+\usepackage{appendix}
+\usepackage[hyphens]{url}
+
+\begin{document}
+	\title{Developing Secure Systems Individual Report}
+	\author{
+		100203952 -- Thomas Mcloughlin\\
+		CMP-6045B
+	}
+	\maketitle
+
+    \section{Introduction}\label{sec:Intro}
+        This is an introduction. 
+        % \cite{bibItem} << Example cite command (Look at overleaf tutorials) 
+        % \ref{app:A} << This example references appendix A (Look at overleaf tutorials) 
+        
+        \subsection{Sub-Section Example}\label{sub:Ex}
+        % Look at overleaf's tutorials on how to add images and tables.
+        % Any queries contact Debbie, Andy, Dan or Ellie
+        
+    \section{Conclusion}\label{sec:Con}
+    
+    % Setting up your bibliography style - NOTE CMP uses Harvard style so stick with apalike for now
+    \bibliographystyle{apalike}
+    % Link your bibliography to your main.tex
+    \nocite{*}
+	\bibliography{bibfile.bib}
+	% Look at DBLP or Google Scholar for references (NOTE - Google Scholar can produce usable bib entries - allowing you to copy and paste into myBib.bib)
+	
+	\newpage
+	% Following command starts an appendices section (NOTE - You have included appendix as a package at the start of the document)
+	\appendix
+	    % Using appendices in this format means you can just use \section{}
+        \section{Appendix A}\label{app:A}   % Adding the label will allow you to reference this section in your work.
+            \newpage
+        \section{Appendix B}\label{app:B}
+
+\end{document}

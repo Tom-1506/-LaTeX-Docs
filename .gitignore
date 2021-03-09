@@ -15,6 +15,7 @@
 *.fot
 *.cb
 *.cb2
+*.cls
 .*.lb
 
 ## Intermediate documents:
