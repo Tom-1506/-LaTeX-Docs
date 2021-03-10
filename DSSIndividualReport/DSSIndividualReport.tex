@@ -2,6 +2,8 @@
 
 \RequirePackage{natbib}
 \usepackage{graphicx,caption}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 \usepackage{appendix}
 \usepackage[hyphens]{url}
 
@@ -14,29 +16,98 @@
 	\maketitle
 
     \section{Introduction}\label{sec:Intro}
-        This is an introduction. 
+    This report will present research of the top cyber threats and vulnerabilities of modern 
+    systems with the aim of identifying methods to mitigate them.
+
+    \section{Part 1}\label{sec:Pt1}
         % \cite{bibItem} << Example cite command (Look at overleaf tutorials) 
         % \ref{app:A} << This example references appendix A (Look at overleaf tutorials) 
         
-        \subsection{Sub-Section Example}\label{sub:Ex}
-        % Look at overleaf's tutorials on how to add images and tables.
-        % Any queries contact Debbie, Andy, Dan or Ellie
+        \subsection{Account Enumeration}\label{sub:AccEnum}
+        Account enumeration is the manipulation of a service's login function to determine 
+        the existence of a user. Attackers would determine this through two actions, first 
+        by inputting a username and password into the login and if a message is received 
+        stating that the password is wrong but not the username, then the attacker now 
+        knows that the username exists. The way to mitigate this manipulation is to return 
+        a generic message for a login failure not specifying whether the username or 
+        password is wrong, however this mitigation can be nullified using the second method 
+        where the attacker will try to log in and then compare the time taken to resolve the 
+        failed login. If the response was quick then the username doesn't exist, if the 
+        reponse took slightly longer then the service recognised the username and took longer 
+        to try and match the password. This manipulation can also be mitigated by applying a 
+        delay to the reponse when the username is wrong so that the attacker could not 
+        tell the difference between the two responses.
+        The mitigation methods described above fit into a secure by design approach because 
+        they are concerned with the back end implementation details of the system and are 
+        obscured well from any attackers. These techniques have been represented as 
+        pseudocode in section \ref{sec:account-enumeration} of Appendix A.
+
+        Threat actors likely to use account enumeration are attackers of any kind that could 
+        range from casual programmers to criminal hackers trying to access various services. 
+        A likely attack vector for using attack enumeration would be if the attacker had 
+        gained access to a list of passwords for a service and was trying to find users to 
+        match to so that they could break into the system.
+
+        The interaction between the end users and the service will not be greatly affected 
+        by the implementation of these mitigations with respect to the improved security 
+        they provide, these mitigations do not affect the process of a sucessful login. 
+        The only problem that can arise with usability will be that if a user forgets their 
+        password or isn't sure what username they used for the service, the generic message 
+        not specifying which is wrong can be frustrating and make logging in more difficult. 
+
         
+    \section{Part 2}\label{sec:Pt2}
+
     \section{Conclusion}\label{sec:Con}
     
-    % Setting up your bibliography style - NOTE CMP uses Harvard style so stick with apalike for now
     \bibliographystyle{apalike}
-    % Link your bibliography to your main.tex
+
     \nocite{*}
 	\bibliography{bibfile.bib}
-	% Look at DBLP or Google Scholar for references (NOTE - Google Scholar can produce usable bib entries - allowing you to copy and paste into myBib.bib)
 	
 	\newpage
-	% Following command starts an appendices section (NOTE - You have included appendix as a package at the start of the document)
+	
 	\appendix
 	    % Using appendices in this format means you can just use \section{}
         \section{Appendix A}\label{app:A}   % Adding the label will allow you to reference this section in your work.
             \newpage
+
+            \begin{figure}[ht]
+                \subsection{Account Enumeration Mitigation}
+                \label{sec:account-enumeration}
+                \centering
+                \begin{algorithm}[H]
+                \caption{login(\emph{username}, \emph{password}) {\bf return} \emph{response}}
+                      \begin{algorithmic}[1]
+                          \Require $username$, the username for login
+                          \Require $password$, the password for login
+                          \Require $users$, the set of users and passwords that the system will 
+                                    compare the login against
+                          \Ensure \emph{response}, either a sucessful login or a response message
+                          \State{$Failure \leftarrow$ "The username/password is incorrect"}
+                          \ForAll{$user$ in $users$}
+                            \If{$username$ = $user.username$}
+                              \If{$password$ = $user.password$}
+                                \State{$response \leftarrow Sucess$}
+                                \Comment{Username and password correct}
+                              \Else
+                                \State{$response \leftarrow Failure$}  
+                                \Comment{Username correct, password incorrect}
+                              \EndIf
+                            \Else
+                            \State{$delay$} 
+                            \Comment{Wait however long the check for the password would take}
+                            \State{$response \leftarrow Failure$}
+                            \Comment{Username and password incorrect}  
+                            \EndIf
+                          \EndFor
+                          \State \Return $response$
+                      \end{algorithmic}
+                \end{algorithm}
+                \caption{Example of a login with account enumeration mitigation included}
+                \label{fig:account-enumeration}
+            \end{figure}
+
         \section{Appendix B}\label{app:B}
 
 \end{document}
