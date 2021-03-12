@@ -92,12 +92,21 @@
         session ID's. Another method of mitigation extraneous to any technical measures 
         would include the training of end users to spot and avoid phishing emails.
 
+        Generating a unique ID with enough complexity to avoid ID guessing is very important. 
+        Therefore an example ID generation algorithm has been included as an acceptable 
+        method shown in section \ref{sec:session-id-gen}. This algorithm was created using 
+        recommended practices from \cite{OWASPSessionManagement} such as ensuring the entropy 
+        number used is 64 bits to give an acceptable level of complexity.
+
         The addition of any of the mentioned mitigations would have very little affect on 
         the end users as the mitigations proposed are mainly secure by design techniques 
         that are more concerned with backend interaction. Usability will not be sacrificed 
         to a noticeable degree, the only affect on the user would be the requirement to 
         always log back into the system once they leave as the session they previously used 
         would have been closed.
+
+        \subsection{SQL Injection}\label{sub:SqlInject}
+
         
     \section{Part 2}\label{sec:Pt2}
 
@@ -149,6 +158,33 @@
                 \caption{Example of a login with account enumeration mitigation included}
                 \label{fig:account-enumeration}
             \end{figure}
+
+            \begin{figure}[ht]
+              \subsection{Session ID Generation}
+              \label{sec:session-id-gen}
+              \centering
+              \begin{algorithm}[H]
+              \caption{generateUniqueSessionId() {\bf return} \emph{sessionId}}
+                    \begin{algorithmic}[1]
+                        \Require $IdList$, the set of existing session Id's
+                        \Require $prng$, pseudo random number generator
+                        \Ensure \emph{sessionId}, a unique session Id
+                        \State $entropy \leftarrow prng(64)$
+                        \Comment{Pseudo random number generation of length 64 bits}
+                        \State $Id \leftarrow generateId()$
+                        \Comment{Generate complex Id}
+                        \State $sessionId \leftarrow concatenate(Id, entropy)$
+                        \If{$sessionId \in IdList$}
+                          \State generateUniqueSessionId()
+                          \Comment{Session Id isn't unique, generate a new Id}
+                        \EndIf
+                        \State \Return $sessionId$
+                    \end{algorithmic}
+              \end{algorithm}
+              \caption{Example of a random session Id generator using recommended practices 
+                       from \cite{OWASPSessionManagement}}
+              \label{fig:session-id-gen}
+          \end{figure}
 
         \section{Appendix B}\label{app:B}
 
