@@ -55,6 +55,49 @@
         password or isn't sure what username they used for the service, the generic message 
         not specifying which is wrong can be frustrating and make logging in more difficult. 
 
+        \subsection{Session Hijacking}\label{sub:SessHijk}
+        Session hijacking is the utilisation of a lack of security given to website sessions 
+        where a user that has logged in creates a session with the web server so that they 
+        can make requests to the server without having to send log in details for every 
+        request. These sessions have an attached ID so that the web server knows which user 
+        it is communicating with, session hijacking refers to the multiple methods used to 
+        gain access to a session, usually by accessing the ID. 
+
+        When attempting to gain access using the ID, one possibility could be that the site 
+        uses existent session ID's rather than generating a new ID for every session. This 
+        opens up the session for attack from session fixation where the attacker uses a 
+        known ID in a phishing email link to have the user login and authenticate themselves 
+        then the attacker can hijack the session using the session ID \citep{OWASPSessionFixation}.
+
+        There are multiple methods used to acquire session ID's to use for session fixation. 
+        Session sniffing, the use of packet sniffing software to intercept session packets 
+        and acquire the session ID attached to it, this can be done manually by the attacker 
+        or the attacker may use malware to automate the process. The attacker may also brute 
+        force the ID's by going through all possible permutations of the ID.
+
+        The threat actors likely to use session hijackers are the same as stated above 
+        in \ref{sub:AccEnum}. The risk posed by these attacks are: the attackers would 
+        be able to gain access to a user authenticated login and perform any actions that the 
+        user would be able to within that session such as a money transfer, the attacker would 
+        also have access to any personal information that the session allows the user to view 
+        which may lead to ID theft, the attacker may encrypt valuable/vital data for ransom 
+        which could include intellectual property.
+
+        The main methods to mitigate session hijacking attacks include: making session ID's 
+        long and complex to avoid brute force access, make the site use a new session for 
+        each time a user logs in and give each new session a unique ID to stop access if a 
+        previously used ID has been compromised, ensure that a session is closed once a user 
+        logs out or if the session is not being used and times out and finally, all session 
+        data should be encrypted to prevent sniffing and malware attacks from accessing the 
+        session ID's. Another method of mitigation extraneous to any technical measures 
+        would include the training of end users to spot and avoid phishing emails.
+
+        The addition of any of the mentioned mitigations would have very little affect on 
+        the end users as the mitigations proposed are mainly secure by design techniques 
+        that are more concerned with backend interaction. Usability will not be sacrificed 
+        to a noticeable degree, the only affect on the user would be the requirement to 
+        always log back into the system once they leave as the session they previously used 
+        would have been closed.
         
     \section{Part 2}\label{sec:Pt2}
 
@@ -62,7 +105,6 @@
     
     \bibliographystyle{apalike}
 
-    \nocite{*}
 	\bibliography{bibfile.bib}
 	
 	\newpage
