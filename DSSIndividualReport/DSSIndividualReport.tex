@@ -166,6 +166,92 @@
       The only affect on the system will be the minor performance concerns.
 
       \subsection{Cross-site Scripting}\label{sub:XSS}
+      Cross-site scripting refers to the various methods used to execute malicious 
+      javascript to access or steal information from a victim. There are 3 types of XSS, 
+      the first being "Stored". Stored cross-site scripting is the most damaging type of 
+      XSS where an attacker uses a website form, commonly on a website that allows public 
+      posts such as a social media site, to insert a malicious string into the websites 
+      database. This malicious string is now stored in the site, hence the name, and when 
+      a victim requests the compromised post, the website includes the malicious string in 
+      the response and sends it to the victim. The victims browser then executes the script 
+      inside the response. The script can be used for various functions but is commonly used 
+      to steal cookie data so that the attacker can then gain access to the site using the 
+      victims access, this is session hijacking as explained in section \ref{sub:SessHijk}. 
+      This form of XSS is particularly dangerous as one insertion of malicious script can 
+      affect multiple victims due to the script having been stored in the website database 
+      and multiple victims may request that data.
+
+      The second type of XSS is reflected cross-site scripting which differs from stored 
+      by having the malicious script be sent to the victim first in the form of a link to 
+      a site. The attacker tricks the victim into clicking the link which sends the 
+      malicious script to the vulnerable site, the site takes the data from the request and 
+      adds the malicious script to the webpage where it then executes the script which could 
+      be used for the same uses as described above, commonly session hijacking.
+
+      The third type of XSS is done through manipulation of a websites document object model 
+      (DOM). The attacker constructs a URL containing the malicious script and sends it to 
+      the victim, the victim is tricked by the attacker into requesting the URL from a site 
+      that is vulnerable to attack. The website receives the request, but instead of 
+      responding to the victim with the malicious script, the DOM of the website is manipulated 
+      to insert the malicious script into the website and then the victims browser executes it. 
+      This sends the victims cookies and sensitive data to the attacker allowing them to hijack 
+      their session or use the sensitive data for other means such as identity theft.
+
+      The first important method of mitigation for XSS relating to stored and reflected XSS is 
+      encoding website element content also known as escaping. If the attacker has inserted 
+      some malicious script into a post on a social media site for example. The site should 
+      check the string used for the post and character by character, encode any possibly 
+      malicious characters into a different format to avoid the script being seen and 
+      executed as javascript. For example the "$<script>$" section of the malicious string 
+      may be encoded in ASCII, so the '$<$' and '$>$' characters will be converted to \&\#60 
+      and \&\#62 respectively. To avoid loss of content in the actual post, the html element 
+      used to display the content should then be set to use ASCII encoding . This will result 
+      in the script being shown as part of the post and the user may read it, but it will not 
+      be recognised as script and executed \citep{IBMProtectFromXSS}. Escaping for different 
+      expected characters is used when needed in certain contexts, the example described 
+      above is an HTML escape context, but it important to do the same for Javascript and 
+      others when needed. An example of how this encoding could be designed is shown in 
+      section \ref{fig:xss-char-esc} of appendix A. 
+
+      Another method of mitigation for XSS is validation of user input. Any data received 
+      that originates from outside the system should be untrusted until validated. This 
+      validation could be done using a whitelist of known acceptable inputs depending on 
+      the context.
+      Along with validating input any untrusted input should also be sanitised to remove 
+      unwanted data, depending on the context, including html tags and unsafe characters. 
+
+      Mitigation for DOM cross-site scripting is more complex than for stored and reflected 
+      XSS. When inserting untrusted data into sections of the DOM you should run HTML and 
+      Javascript escaping before-hand as described above. However if the untrusted data is 
+      inserted into the Javascript section of the DOM then encoding it will not prevent it 
+      from being executed. A fundamental method of avoiding this issue is the use of a safe 
+      Javascript assignment property $textContent$ and other safe content inserts, an example 
+      of which can be seen in section \ref{sec:textContent} of appendix A. It is important 
+      to avoid the use of innerHTML as an output method and instead use innerText of 
+      textContent as explained above. This help prevent DOM based XSS vulnerabilities 
+      \citep{OWASPDOMXSSPrevention}. 
+
+      The mitigation techniques explained above are all important to a secure by design 
+      approach, handling of untrusted data that is received by a site is incredibly important 
+      to prevent manipulation of users access and personal information.
+
+      The likely threat actors to use cross-site scripting attacks are once again mostly the 
+      same as those stated in \ref{sub:AccEnum}, however cross-site scripting is likely to be 
+      used more by those with an advanced understanding of hacking and website vulnerabilities. 
+      The common attack vectors for cross-site scripting require the tricking of the user to 
+      accessing a site through an attacker provided link, phishing emails being the most common 
+      delivery system. The consequences of a successful attack can range from minor to 
+      catastrophic, from simple redirection of the browser to cookie theft used for session 
+      hijacking, keylogging to steal personal information and credentials, fake login forms also 
+      for stealing credentials and using XSS to steal CSRF tokens that will be explained in 
+      the next section.
+
+      The end users can be affected by some of the mitigation techniques mentioned if not 
+      properly implemented. Encoding of scripts being sent to a site can prevent certain 
+      actions the site could make that may help usability. However the security benefits 
+      of avoiding XSS attacks are numerous.
+
+      \subsection{Cross-site Request Forgery}\label{sub:CSRF}
       
         
     \section{Part 2}\label{sec:Pt2}
@@ -278,6 +364,38 @@
             \caption{Example of table name validation, an adapted example from 
                      \cite{OWASPSqlInjectionPrevention}}
             \label{fig:whitelist-valid}
+          \end{figure}
+
+          \begin{figure}[ht]
+            \subsection{External Script Character Escaping}
+            \label{sec:xss-char-esc}
+            \centering
+            \begin{algorithm}[H]
+            \caption{stringCharEscape(\emph{inputString}) {\bf return} \emph{encodedString}}
+              \begin{algorithmic}[1]
+                \Require $inputString$, the inputted string (potentially malicious)
+                \Require $charEncodingList$, list of characters encoded values
+                \Ensure \emph{encodedString}, the final encoded string
+                \ForAll{$char$ in $inputString$}
+                  \If{$char.encode \in charEncodingList$}
+                    \State $encodedString \leftarrow concatenate(encodedString, char.encode)$
+                  \Else
+                    \State $encodedString \leftarrow concatenate(encodedString, char)$
+                  \EndIf
+                \EndFor
+                \State \Return $encodedString$
+              \end{algorithmic}
+            \end{algorithm}
+            \caption{Example of character escaping to encode a possibly malicious string}
+            \label{fig:xss-char-esc}
+          \end{figure}
+
+          \begin{figure}
+            \subsection{Use of textContent for Inserting Untrusted Data}
+            \label{sec:textContent}
+            \includegraphics{textContent}
+            \caption{Example of using textContent to insert untrusted data safely into the DOM
+                     \citep{OWASPDOMXSSPrevention}}
           \end{figure}
 
 \end{document}
