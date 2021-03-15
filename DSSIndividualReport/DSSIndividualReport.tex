@@ -252,7 +252,56 @@
       of avoiding XSS attacks are numerous.
 
       \subsection{Cross-site Request Forgery}\label{sub:CSRF}
+      Cross-site request forgery (CSRF) is a method used by attackers to execute requests on 
+      a trusted website by using an already open session of a victim. If the victim has a 
+      session open with a trusted site, then visits a site controlled by the attacker and 
+      activates a link, by clicking a button for example, the link can make a request to 
+      the trusted site using the open session that the user has causing some action to be 
+      carried out by the site that the victim may not realise. An example would be if a 
+      victim is logged into their bank account on the banks website, then accesses an attacker 
+      owned site through a phishing email, the attacker could create a link that makes a request
+      to the bank website to make a money transfer to the attackers account and because there 
+      is an open trusted session with the victims account, the transfer would go through.
       
+      One mitigation technique for CSRF is the use of tokens for site requests, this attaches 
+      a server side generated token to either the user session or a separate token for each 
+      field input, the latter being more secure, so that when the server receives a request 
+      it can check for the existence of a token in the request or check that the token matches 
+      to validate whether the request is legitimate or not. If the request is found to be 
+      illegitimate then the current user session should be closed and logged as a possible 
+      CSRF attack. CSRF tokens should be completely unique to avoid the capture and reuse of 
+      previous tokens, they should be secret and they should be unpredictable, generated with 
+      a suitable prng to prevent sequential brute forcing of token values. The tokens should 
+      not be transfered via cookies and should instead use hidden fields and headers, the 
+      tokens could also be encrypted to add another layer of security \citep{OWASPCSRFPrevention}.
+
+      Another mitigation method is the use of captchas which help prevent spamming requests 
+      to a server aswell as CSRF. By requesting an input that is random and unknown to the 
+      attacker you place a blackage between their malicious request and execution. 
+      Alongside captchas can be the use of re-authentication for certain actions, for example 
+      requiring the user to input their password again when trying to make a bank transfer. 
+      This can be taken another step further by requiring 2-factor authentication to avoid 
+      the attacker being able to re-authenticate the request if the victims password has been 
+      compromised.
+
+      Also commonly used is the double submit cookie technique which involves sending a random 
+      value in both a cookie and as a request parameter, the server then verifies if the 
+      cookie value and the request value match. When a user visits, the site should generate 
+      am cryptographically strong pseudorandom value as a hidden form value and set that as 
+      a cookie in the users browser, separate from the session ID. The site then requires that 
+      every request must include this random value as a hidden value. If both values match at 
+      server side then the server accepts the request, if not then the request is rejected 
+      \citep{OWASPCSRFPrevention}.
+
+      These mitigation techniques are all good examples of secure by design, ensuring that 
+      requests made to the web server are via the user. The end user will only have a slight 
+      change to usability when interacting with sites using these techniques, for example the 
+      use of tokens can cause the "back" function in a browser to not work as intended due to 
+      the previously used token having changed or no longer being valid \citep{OWASPCSRFPrevention}.
+      
+      The most likely attack vector for CSRF is through phishing emails tricking victims into 
+      accessing the attacker owned site. The risks involved could include: financial loss, 
+      stolen data, changing of credentials, ID fraud and much more. 
         
     \section{Part 2}\label{sec:Pt2}
 
