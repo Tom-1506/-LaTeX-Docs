@@ -21,8 +21,6 @@
     systems with the aim of identifying methods to mitigate them.
 
     \section{Part 1}\label{sec:Pt1}
-      % \cite{bibItem} << Example cite command (Look at overleaf tutorials) 
-      % \ref{app:A} << This example references appendix A (Look at overleaf tutorials) 
       
       \subsection{Account Enumeration}\label{sub:AccEnum}
       Account enumeration is the manipulation of a service's login function to determine 
@@ -304,12 +302,119 @@
       stolen data, changing of credentials, ID fraud and much more. 
         
     \section{Part 2}\label{sec:Pt2}
+    In this section a comparison and evaluation between three authentication methods will 
+    be carried out to determine which would be most suitable to implement in the group web 
+    application. The methods chosen are the standard username/password, biometric 
+    fingerprint scanner and graphical passwords.
+    
+    First will be an exaplanation of each method. The standard username/password method is 
+    the most ubiquitous authentication method across all types of software. It uses a simple 
+    pairing of a unique and semi-public username (sometimes an email address is used) with a 
+    secret password. The semi-public nature of the username meaning that it is left 
+    uncensored when inputted and is also used to refer to the user in communication and, in 
+    the case of an email address, used to communicate with the user directly. The username 
+    should be treated as secure information and withheld from unauthorised viewing where 
+    possible, but it is not considered as important and keeping the users password safe. 
+    \\
+    There are many precautions put in place to keep a users password secret to avoid having 
+    an attacker gain access to the users account. The most simple of which is to censor the 
+    password when inputting to avoid shoulder surfing and having someone read your password 
+    as you type it in. Some methods of secrecy are placed in the responsibility of the user 
+    such as the use of special characters and character length requirements to make passwords 
+    harder to guess or brute force, these requirements are usually built into the login 
+    system to force users to create stronger passwords. 
+    \\
+    For back end related security there's the discussion of storage methods when handling 
+    usernames and passwords. Once stored in a properly secured database you would decide 
+    what hashing algorithm to use for the password and possibly the username aswell. 
+    Algorithms such as MD5 are not suitable as they are reversible, this site \citep{NISTHashFunctions} 
+    by the U.S National Institute of Standards and Technology recommends that SHA-256 
+    should be used at minimum to provide a secure and unique hash. 
 
+    Biometric fingerprint scanners work by taking an image/scan of the users fingerprint 
+    and storing it, then when the user tries to login another scan is done and compared to 
+    the saved scan to determine whether the user is authorised. Security needs to be 
+    considered with how the users fingerprint is stored so that they cannot be stolen and 
+    used for identity theft, an issue with this being the difficulty to securely store an 
+    image for this purpose. The fingerprint scanner will not always receive exactly the 
+    same image of the fingerprint, software has to find the similarities between the 
+    inputted fingerprint and the stored image to decide whether the user is authorised. 
+    This means that you cannot hash the stored fingerprint for comparison because the 
+    inputted fingerprint will be different and produce a completely different hash that 
+    cannot be compared. The hardware used for scanning also needs to be able to take 
+    high enough fidelity images to recognise the unique differences between each fingerprint 
+    to avoid false positives.
+
+    Graphical passwords work by having the user choose a varying number of points on an image, 
+    this image could be chosen by them, which are then stored. When the user wants to login 
+    they must click the same points on the image that they clicked before, allowing for some 
+    small margin of error because it will be too difficult to click the exact same pixel. 
+    A similar issue to that explained above for storing the fingerprint arises with a 
+    graphical password system. You must store the coordinates of the points inputted by the 
+    user but you cannot hash them as you will need to compare the new points that the user 
+    will click when trying to login.
+
+    The reason that fingerprint scanning and graphical passwords were chosen for comparison 
+    to the standard username/password method are because they show two directions that 
+    technology has taken when trying to improve on the standard method. Both have tried to 
+    take what works about username/password and improve where they can, one being successful 
+    and widespread (fingerprint scanning) and the other not really moving into mainstream use 
+    (graphical passwords).
+
+    Some of the main reasons for trying to improve on the username/password standard is for 
+    improving usability, using a fingerprint scanner is now extremely quick with modern scanners 
+    and graphical passwords make it easier for users to remember there login as the human 
+    brain is much better at remembering images than it is at remembering words \citep{Grady2703}.
+    The usability of the standard username/password comes from it being so ubiquitous and 
+    familiar to the common user, every computer will have at least a keyboard allowing 
+    the input of a username and password. Username and password is slow however compared to 
+    fingerprint scanning and a graphical password. It also requires remembering a complex 
+    password compared to the easier to remember graphical password and not having to recall 
+    any information for a fingerprint scanner. 
+    \\
+    The security trade-offs that go along with these usability points are as follows. For 
+    a username/password approach the strong and ubiquitous security comes with the drawback 
+    that users are likely to forget their complex password. When given the requirement to 
+    have a complex and difficult to remember password, users are going to write down 
+    passwords to help them login, therefore negating a main advantage of the security.    
+    \\
+    While the fingerprint scanner is fast and easy to use, it can be easily obscured if 
+    there is dirt on the fingerprint or if there is damage to the fingerprint the user may 
+    be unable to login at all (this should be and is avoided using multiple fingerprints), 
+    the insecure nature of storing the fingerprint image, mentioned above, is also an 
+    important factor. 
+    For the benefit of security the fingerprint for logging in is usually stored on the device 
+    rather than on a database server to prevent an attacker from stealing biometric data if 
+    the database is compromised, however this comes with the drawback that you must have a 
+    different stored fingerprint on each device. 
+    \\ 
+    With a graphical password, The issue of complexity when choosing an image is important, 
+    with a very complex image, users are likely to forget where they clicked before and users 
+    are also likely to pick the same points if they are using the same image. Even if an 
+    attacker had never seen the image the user chose before gaining access to it, they would 
+    likely be able to brute force guess some of the chosen points.
+
+    For the group web application assignment I believe that using the standard username/
+    password method will be most suitable. It provides a high level of security when using 
+    complex requirements, doesn't require special hardware like a fingerprint scanner, allows 
+    storing passwords securely using hashes unlike a fingerprint or graphical password image 
+    and will be familiar to all users. 
 
     \section{Conclusion}\label{sec:Con}
-
+    In this document I have discussed the common vulnerabilities of web applications in Part 1 
+    with methods of mitigation for each, the threat actors likely to use these vulnerabilities, the attack 
+    vectors that they would try to exploit, the risk implications of each vulnerability if 
+    they were successfully attacked, how the mitigation methods relate to secure by design 
+    techniques and the effect on end-users with usability vs security concerns.
+    \\
+    In Part 2 I discussed username/password, biometric fingerprint scanning and graphical 
+    passwords as various authorisation techniques, how each of them work, their effectiveness 
+    , the trade-offs with usability and security and which I recommend for implementation in 
+    the group web application and why.
     
     \bibliographystyle{apalike}
+
+  \newpage
 
 	\bibliography{bibfile.bib}
 	
