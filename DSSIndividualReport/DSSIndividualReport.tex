@@ -37,12 +37,13 @@
       delay to the reponse when the username is wrong so that the attacker could not 
       tell the difference between the two responses.
       The mitigation methods described above fit into a secure by design approach because 
-      they are concerned with the back end implementation details of the system and are 
+      they are concerned with the back-end implementation details of the system and are 
       obscured well from any attackers. These techniques have been represented as 
-      pseudocode in section \ref{sec:account-enumeration} of Appendix A.
+      pseudocode in section \ref{sec:account-enumeration} of the appendix.
 
-      Threat actors likely to use account enumeration are attackers of any kind that could 
-      range from casual programmers to criminal hackers trying to access various services. 
+      Threat actors likely to use account enumeration are attackers of any kind, they range 
+      from individual, autonomous hackers to well-resourced groups operating in a coordinated 
+      manner as part of a criminal enterprise or on behalf of a nation-state \citep{NISTGuideToCyber}
       A likely attack vector for using attack enumeration would be if the attacker had 
       gained access to a list of passwords for a service and was trying to find users to 
       match to so that they could break into the system.
@@ -111,8 +112,8 @@
       fields such as the username and password inputs on a login page. If the login 
       input fields take any value inputted and inserts that input into an sql query 
       meant to retrieve user data, an example of which can be seen in section 
-      \ref{sec:sql-query} of appedix A. If the attacker inputs part of a valid query 
-      that will always evaluate to true, such as ' OR 1=1;--, then the example query 
+      \ref{sec:sql-query} of the appendix. If the attacker inputs part of a valid query 
+      that will always evaluate to true, such as "' OR 1=1;--", then the example query 
       will return all user data from the table. Depending on how much sensitive data 
       is stored in the user table this could be a very dangerous breach, for example 
       if passwords were also stored in the user table.
@@ -145,7 +146,7 @@
       avoid the risks of sql injection. By mapping input values to a preset whitelist 
       of possible choices for the target, the executed query avoids using the actual 
       input from the user, an example is described in section \ref{sec:whitelist-valid} 
-      of appendix A.
+      of the appendix.
 
       The mitigation methods discussed above would all be necessary inclusions in a 
       secure by design approach as it would take considerable effort to convert a system 
@@ -198,7 +199,7 @@
       The first important method of mitigation for XSS relating to stored and reflected XSS is 
       encoding website element content also known as escaping. If the attacker has inserted 
       some malicious script into a post on a social media site for example. The site should 
-      check the string used for the post and character by character, encode any possibly 
+      check the string used for the post and, character by character, encode any possibly 
       malicious characters into a different format to avoid the script being seen and 
       executed as javascript. For example the "$<script>$" section of the malicious string 
       may be encoded in ASCII, so the '$<$' and '$>$' characters will be converted to \&\#60 
@@ -209,7 +210,7 @@
       expected characters is used when needed in certain contexts, the example described 
       above is an HTML escape context, but it important to do the same for Javascript and 
       others when needed. An example of how this encoding could be designed is shown in 
-      section \ref{fig:xss-char-esc} of appendix A. 
+      section \ref{fig:xss-char-esc} of the appendix. 
 
       Another method of mitigation for XSS is validation of user input. Any data received 
       that originates from outside the system should be untrusted until validated. This 
@@ -224,16 +225,16 @@
       inserted into the Javascript section of the DOM then encoding it will not prevent it 
       from being executed. A fundamental method of avoiding this issue is the use of a safe 
       Javascript assignment property $textContent$ and other safe content inserts, an example 
-      of which can be seen in section \ref{sec:textContent} of appendix A. It is important 
+      of which can be seen in section \ref{sec:textContent} of the appendix. It is important 
       to avoid the use of innerHTML as an output method and instead use innerText of 
-      textContent as explained above. This help prevent DOM based XSS vulnerabilities 
+      textContent as explained above. This helps prevent DOM based XSS vulnerabilities 
       \citep{OWASPDOMXSSPrevention}. 
 
       The mitigation techniques explained above are all important to a secure by design 
       approach, handling of untrusted data that is received by a site is incredibly important 
       to prevent manipulation of users access and personal information.
 
-      The likely threat actors to use cross-site scripting attacks are once again mostly the 
+      The likely threat actors to use cross-site scripting attacks are once again the 
       same as those stated in \ref{sub:AccEnum}, however cross-site scripting is likely to be 
       used more by those with an advanced understanding of hacking and website vulnerabilities. 
       The common attack vectors for cross-site scripting require the tricking of the user to 
@@ -252,9 +253,9 @@
       \subsection{Cross-site Request Forgery}\label{sub:CSRF}
       Cross-site request forgery (CSRF) is a method used by attackers to execute requests on 
       a trusted website by using an already open session of a victim. If the victim has a 
-      session open with a trusted site, then visits a site controlled by the attacker and 
+      session open with a trusted site then visits a site controlled by the attacker and 
       activates a link, by clicking a button for example, the link can make a request to 
-      the trusted site using the open session that the user has causing some action to be 
+      the trusted site using the open session assigned to the victim, causing some action to be 
       carried out by the site that the victim may not realise. An example would be if a 
       victim is logged into their bank account on the banks website, then accesses an attacker 
       owned site through a phishing email, the attacker could create a link that makes a request
@@ -264,7 +265,7 @@
       One mitigation technique for CSRF is the use of tokens for site requests, this attaches 
       a server side generated token to either the user session or a separate token for each 
       field input, the latter being more secure, so that when the server receives a request 
-      it can check for the existence of a token in the request or check that the token matches 
+      it can check for the existence of a token in the request and check that the token matches 
       to validate whether the request is legitimate or not. If the request is found to be 
       illegitimate then the current user session should be closed and logged as a possible 
       CSRF attack. CSRF tokens should be completely unique to avoid the capture and reuse of 
@@ -275,7 +276,7 @@
 
       Another mitigation method is the use of captchas which help prevent spamming requests 
       to a server aswell as CSRF. By requesting an input that is random and unknown to the 
-      attacker you place a blackage between their malicious request and execution. 
+      attacker you place a blockage between their malicious request and execution. 
       Alongside captchas can be the use of re-authentication for certain actions, for example 
       requiring the user to input their password again when trying to make a bank transfer. 
       This can be taken another step further by requiring 2-factor authentication to avoid 
@@ -285,7 +286,7 @@
       Also commonly used is the double submit cookie technique which involves sending a random 
       value in both a cookie and as a request parameter, the server then verifies if the 
       cookie value and the request value match. When a user visits, the site should generate 
-      am cryptographically strong pseudorandom value as a hidden form value and set that as 
+      a cryptographically strong pseudorandom value as a hidden form value and set that as 
       a cookie in the users browser, separate from the session ID. The site then requires that 
       every request must include this random value as a hidden value. If both values match at 
       server side then the server accepts the request, if not then the request is rejected 
@@ -301,6 +302,7 @@
       accessing the attacker owned site. The risks involved could include: financial loss, 
       stolen data, changing of credentials, ID fraud and much more. 
         
+    \newpage
     \section{Part 2}\label{sec:Pt2}
     In this section a comparison and evaluation between three authentication methods will 
     be carried out to determine which would be most suitable to implement in the group web 
@@ -311,7 +313,7 @@
     the most ubiquitous authentication method across all types of software. It uses a simple 
     pairing of a unique and semi-public username (sometimes an email address is used) with a 
     secret password. The semi-public nature of the username meaning that it is left 
-    uncensored when inputted and is also used to refer to the user in communication and, in 
+    uncensored when inputted, is used to refer to the user in communication and, in 
     the case of an email address, used to communicate with the user directly. The username 
     should be treated as secure information and withheld from unauthorised viewing where 
     possible, but it is not considered as important and keeping the users password safe. 
@@ -329,7 +331,7 @@
     what hashing algorithm to use for the password and possibly the username aswell. 
     Algorithms such as MD5 are not suitable as they are reversible, this site \citep{NISTHashFunctions} 
     by the U.S National Institute of Standards and Technology recommends that SHA-256 
-    should be used at minimum to provide a secure and unique hash. 
+    should be used, at minimum, to provide a secure and unique hash. 
 
     Biometric fingerprint scanners work by taking an image/scan of the users fingerprint 
     and storing it, then when the user tries to login another scan is done and compared to 
@@ -358,7 +360,7 @@
     to the standard username/password method are because they show two directions that 
     technology has taken when trying to improve on the standard method. Both have tried to 
     take what works about username/password and improve where they can, one being successful 
-    and widespread (fingerprint scanning) and the other not really moving into mainstream use 
+    and widespread (fingerprint scanning) and the other not moving into mainstream use 
     (graphical passwords).
 
     Some of the main reasons for trying to improve on the username/password standard is for 
@@ -408,8 +410,8 @@
     techniques and the effect on end-users with usability vs security concerns.
     \\
     In Part 2 I discussed username/password, biometric fingerprint scanning and graphical 
-    passwords as various authorisation techniques, how each of them work, their effectiveness 
-    , the trade-offs with usability and security and which I recommend for implementation in 
+    passwords as various authorisation techniques, how each of them work, their effectiveness, 
+    the trade-offs with usability and security and which I recommend for implementation in 
     the group web application and why.
     
     \bibliographystyle{apalike}
