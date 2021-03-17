@@ -29,12 +29,12 @@
       stating that the password is wrong but not the username, then the attacker now 
       knows that the username exists. The way to mitigate this manipulation is to return 
       a generic message for a login failure not specifying whether the username or 
-      password is wrong, however this mitigation can be nullified using the second method 
+      password is wrong; however this mitigation can be nullified using the second method 
       where the attacker will try to log in and then compare the time taken to resolve the 
       failed login. If the response was quick then the username doesn't exist, if the 
-      reponse took slightly longer then the service recognised the username and took longer 
+      response took slightly longer then the service recognised the username and took longer 
       to try and match the password. This manipulation can also be mitigated by applying a 
-      delay to the reponse when the username is wrong so that the attacker could not 
+      delay to the response when the username is wrong so that the attacker could not 
       tell the difference between the two responses.
       The mitigation methods described above fit into a secure by design approach because 
       they are concerned with the back-end implementation details of the system and are 
@@ -50,7 +50,7 @@
 
       The interaction between the end users and the service will not be greatly affected 
       by the implementation of these mitigations with respect to the improved security 
-      they provide, these mitigations do not affect the process of a sucessful login. 
+      they provide, these mitigations do not affect the process of a successful login. 
       The only problem that can arise with usability will be that if a user forgets their 
       password or isn't sure what username they used for the service, the generic message 
       not specifying which is wrong can be frustrating and make logging in more difficult. 
@@ -60,12 +60,12 @@
       where a user that has logged in creates a session with the web server so that they 
       can make requests to the server without having to send log in details for every 
       request. These sessions have an attached ID so that the web server knows which user 
-      it is communicating with, session hijacking refers to the multiple methods used to 
+      it is communicating with; session hijacking refers to the multiple methods used to 
       gain access to a session, usually by accessing the ID. 
 
       When attempting to gain access using the ID, one possibility could be that the site 
       uses existent session ID's rather than generating a new ID for every session. This 
-      opens up the session for attack from session fixation where the attacker uses a 
+      opens the session for attack from session fixation where the attacker uses a 
       known ID in a phishing email link to have the user login and authenticate themselves 
       then the attacker can hijack the session using the session ID \citep{OWASPSessionFixation}.
 
@@ -76,14 +76,14 @@
       force the ID's by going through all possible permutations of the ID.
 
       The threat actors likely to use session hijackers are the same as stated above 
-      in \ref{sub:AccEnum}. The risk posed by these attacks are: the attackers would 
+      in \ref{sub:AccEnum}. The risk posed by these attacks are the attackers would 
       be able to gain access to a user authenticated login and perform any actions that the 
       user would be able to within that session such as a money transfer, the attacker would 
       also have access to any personal information that the session allows the user to view 
       which may lead to ID theft, the attacker may encrypt valuable/vital data for ransom 
       which could include intellectual property.
 
-      The main methods to mitigate session hijacking attacks include: making session ID's 
+      The main methods to mitigate session hijacking attacks include making session ID's 
       long and complex to avoid brute force access, make the site use a new session for 
       each time a user logs in and give each new session a unique ID to stop access if a 
       previously used ID has been compromised, ensure that a session is closed once a user 
@@ -93,15 +93,15 @@
       would include the training of end users to spot and avoid phishing emails.
 
       Generating a unique ID with enough complexity to avoid ID guessing is very important. 
-      Therefore an example ID generation algorithm has been included as an acceptable 
+      Therefore, an example ID generation algorithm has been included as an acceptable 
       method shown in section \ref{sec:session-id-gen}. This algorithm was created using 
       recommended practices from \cite{OWASPSessionManagement} such as ensuring the entropy 
       number used is 64 bits to give an acceptable level of complexity.
 
-      The addition of any of the mentioned mitigations would have very little affect on 
+      The addition of any of the mentioned mitigations would have very little effect on 
       the end users as the mitigations proposed are mainly secure by design techniques 
       that are more concerned with backend interaction. Usability will not be sacrificed 
-      to a noticeable degree, the only affect on the user would be the requirement to 
+      to a noticeable degree, the only effect on the user would be the requirement to 
       always log back into the system once they leave as the session they previously used 
       would have been closed.
 
@@ -119,7 +119,7 @@
       if passwords were also stored in the user table.
 
       There are multiple methods of mitigation for sql injection that will be discussed 
-      below. Firstly is the use of prepared statements where instead of inserting input 
+      below. Firstly, is the use of prepared statements where instead of inserting input 
       data into sql queries dynamically, the programmer defines all sql queries before-
       hand with inputs being parameterised. Any input then passed through to that query 
       avoids executing an unintended query and will instead take the entire input as a 
@@ -132,7 +132,7 @@
       stored in the database that are then retrieved by the application when needed. 
       If implemented safely, avoiding the use of dynamic sql generation, then stored 
       procedures can provide nearly the same protection as prepared statements. 
-      However a possible vulnerability of stored procedures comapared to prepared 
+      However, a possible vulnerability of stored procedures comapared to prepared 
       statements would be in the case of a database requiring certain access levels 
       such as read and write permissions to prevent certain use of the database. In 
       the case of stored procedures, access to execute queries on the database is 
@@ -159,10 +159,10 @@
       able to execute any query they want on a database, in the case of a catastrophic 
       breach, the attacker could delete tables containing important data.
 
-      End-users are unlikely to experience any adverse affects of the mitigation methods 
+      End-users are unlikely to experience any adverse effects of the mitigation methods 
       as all methods used to prevent sql injection are backend related, these mitigations 
       would not affect usability of the system a noticeable amount to the common user. 
-      The only affect on the system will be the minor performance concerns.
+      The only effect on the system will be the minor performance concerns.
 
       \subsection{Cross-site Scripting}\label{sub:XSS}
       Cross-site scripting refers to the various methods used to execute malicious 
@@ -172,10 +172,10 @@
       posts such as a social media site, to insert a malicious string into the websites 
       database. This malicious string is now stored in the site, hence the name, and when 
       a victim requests the compromised post, the website includes the malicious string in 
-      the response and sends it to the victim. The victims browser then executes the script 
+      the response and sends it to the victim. The victim's browser then executes the script 
       inside the response. The script can be used for various functions but is commonly used 
       to steal cookie data so that the attacker can then gain access to the site using the 
-      victims access, this is session hijacking as explained in section \ref{sub:SessHijk}. 
+      victim's access, this is session hijacking as explained in section \ref{sub:SessHijk}. 
       This form of XSS is particularly dangerous as one insertion of malicious script can 
       affect multiple victims due to the script having been stored in the website database 
       and multiple victims may request that data.
@@ -201,7 +201,7 @@
       some malicious script into a post on a social media site for example. The site should 
       check the string used for the post and, character by character, encode any possibly 
       malicious characters into a different format to avoid the script being seen and 
-      executed as javascript. For example the "$<script>$" section of the malicious string 
+      executed as javascript. For example, the "$<script>$" section of the malicious string 
       may be encoded in ASCII, so the '$<$' and '$>$' characters will be converted to \&\#60 
       and \&\#62 respectively. To avoid loss of content in the actual post, the html element 
       used to display the content should then be set to use ASCII encoding . This will result 
@@ -221,7 +221,7 @@
 
       Mitigation for DOM cross-site scripting is more complex than for stored and reflected 
       XSS. When inserting untrusted data into sections of the DOM you should run HTML and 
-      Javascript escaping before-hand as described above. However if the untrusted data is 
+      Javascript escaping before-hand as described above. However, if the untrusted data is 
       inserted into the Javascript section of the DOM then encoding it will not prevent it 
       from being executed. A fundamental method of avoiding this issue is the use of a safe 
       Javascript assignment property $textContent$ and other safe content inserts, an example 
@@ -232,7 +232,7 @@
 
       The mitigation techniques explained above are all important to a secure by design 
       approach, handling of untrusted data that is received by a site is incredibly important 
-      to prevent manipulation of users access and personal information.
+      to prevent manipulation of users' access and personal information.
 
       The likely threat actors to use cross-site scripting attacks are once again the 
       same as those stated in \ref{sub:AccEnum}, however cross-site scripting is likely to be 
@@ -247,7 +247,7 @@
 
       The end users can be affected by some of the mitigation techniques mentioned if not 
       properly implemented. Encoding of scripts being sent to a site can prevent certain 
-      actions the site could make that may help usability. However the security benefits 
+      actions the site could make that may help usability. However, the security benefits 
       of avoiding XSS attacks are numerous.
 
       \subsection{Cross-site Request Forgery}\label{sub:CSRF}
@@ -257,37 +257,37 @@
       activates a link, by clicking a button for example, the link can make a request to 
       the trusted site using the open session assigned to the victim, causing some action to be 
       carried out by the site that the victim may not realise. An example would be if a 
-      victim is logged into their bank account on the banks website, then accesses an attacker 
+      victim is logged into their bank account on the bank's website, then accesses an attacker 
       owned site through a phishing email, the attacker could create a link that makes a request
       to the bank website to make a money transfer to the attackers account and because there 
       is an open trusted session with the victims account, the transfer would go through.
       
       One mitigation technique for CSRF is the use of tokens for site requests, this attaches 
-      a server side generated token to either the user session or a separate token for each 
+      a server-side generated token to either the user session or a separate token for each 
       field input, the latter being more secure, so that when the server receives a request 
       it can check for the existence of a token in the request and check that the token matches 
       to validate whether the request is legitimate or not. If the request is found to be 
       illegitimate then the current user session should be closed and logged as a possible 
       CSRF attack. CSRF tokens should be completely unique to avoid the capture and reuse of 
-      previous tokens, they should be secret and they should be unpredictable, generated with 
+      previous tokens, they should be secret, they should be unpredictable, generated with 
       a suitable prng to prevent sequential brute forcing of token values. The tokens should 
-      not be transfered via cookies and should instead use hidden fields and headers, the 
+      not be transferred via cookies and should instead use hidden fields and headers, the 
       tokens could also be encrypted to add another layer of security \citep{OWASPCSRFPrevention}.
 
       Another mitigation method is the use of captchas which help prevent spamming requests 
-      to a server aswell as CSRF. By requesting an input that is random and unknown to the 
+      to a server as well as CSRF. By requesting an input that is random and unknown to the 
       attacker you place a blockage between their malicious request and execution. 
       Alongside captchas can be the use of re-authentication for certain actions, for example 
       requiring the user to input their password again when trying to make a bank transfer. 
       This can be taken another step further by requiring 2-factor authentication to avoid 
-      the attacker being able to re-authenticate the request if the victims password has been 
+      the attacker being able to re-authenticate the request if the victim's password has been 
       compromised.
 
       Also commonly used is the double submit cookie technique which involves sending a random 
       value in both a cookie and as a request parameter, the server then verifies if the 
       cookie value and the request value match. When a user visits, the site should generate 
       a cryptographically strong pseudorandom value as a hidden form value and set that as 
-      a cookie in the users browser, separate from the session ID. The site then requires that 
+      a cookie in the user's browser, separate from the session ID. The site then requires that 
       every request must include this random value as a hidden value. If both values match at 
       server side then the server accepts the request, if not then the request is rejected 
       \citep{OWASPCSRFPrevention}.
@@ -299,7 +299,7 @@
       the previously used token having changed or no longer being valid \citep{OWASPCSRFPrevention}.
       
       The most likely attack vector for CSRF is through phishing emails tricking victims into 
-      accessing the attacker owned site. The risks involved could include: financial loss, 
+      accessing the attacker owned site. The risks involved could include financial loss, 
       stolen data, changing of credentials, ID fraud and much more. 
         
     \newpage
@@ -316,30 +316,30 @@
     uncensored when inputted, is used to refer to the user in communication and, in 
     the case of an email address, used to communicate with the user directly. The username 
     should be treated as secure information and withheld from unauthorised viewing where 
-    possible, but it is not considered as important and keeping the users password safe. 
+    possible, but it is not considered as important and keeping the user's password safe. 
     \\
-    There are many precautions put in place to keep a users password secret to avoid having 
-    an attacker gain access to the users account. The most simple of which is to censor the 
+    There are many precautions put in place to keep a user's password secret to avoid having 
+    an attacker gain access to the user's account. The simplest of which is to censor the 
     password when inputting to avoid shoulder surfing and having someone read your password 
     as you type it in. Some methods of secrecy are placed in the responsibility of the user 
     such as the use of special characters and character length requirements to make passwords 
     harder to guess or brute force, these requirements are usually built into the login 
     system to force users to create stronger passwords. 
     \\
-    For back end related security there's the discussion of storage methods when handling 
+    For back-end related security there's the discussion of storage methods when handling 
     usernames and passwords. Once stored in a properly secured database you would decide 
-    what hashing algorithm to use for the password and possibly the username aswell. 
+    what hashing algorithm to use for the password and possibly the username as well. 
     Algorithms such as MD5 are not suitable as they are reversible, this site \citep{NISTHashFunctions} 
     by the U.S National Institute of Standards and Technology recommends that SHA-256 
     should be used, at minimum, to provide a secure and unique hash. 
 
-    Biometric fingerprint scanners work by taking an image/scan of the users fingerprint 
+    Biometric fingerprint scanners work by taking an image/scan of the user's fingerprint 
     and storing it, then when the user tries to login another scan is done and compared to 
     the saved scan to determine whether the user is authorised. Security needs to be 
-    considered with how the users fingerprint is stored so that they cannot be stolen and 
+    considered with how the user's fingerprint is stored so that they cannot be stolen and 
     used for identity theft, an issue with this being the difficulty to securely store an 
     image for this purpose. The fingerprint scanner will not always receive exactly the 
-    same image of the fingerprint, software has to find the similarities between the 
+    same image of the fingerprint, software must find the similarities between the 
     inputted fingerprint and the stored image to decide whether the user is authorised. 
     This means that you cannot hash the stored fingerprint for comparison because the 
     inputted fingerprint will be different and produce a completely different hash that 
@@ -365,7 +365,7 @@
 
     Some of the main reasons for trying to improve on the username/password standard is for 
     improving usability, using a fingerprint scanner is now extremely quick with modern scanners 
-    and graphical passwords make it easier for users to remember there login as the human 
+    and graphical passwords make it easier for users to remember their login as the human 
     brain is much better at remembering images than it is at remembering words \citep{Grady2703}.
     The usability of the standard username/password comes from it being so ubiquitous and 
     familiar to the common user, every computer will have at least a keyboard allowing 
@@ -385,18 +385,18 @@
     be unable to login at all (this should be and is avoided using multiple fingerprints), 
     the insecure nature of storing the fingerprint image, mentioned above, is also an 
     important factor. 
-    For the benefit of security the fingerprint for logging in is usually stored on the device 
+    For the benefit of security, the fingerprint for logging in is usually stored on the device 
     rather than on a database server to prevent an attacker from stealing biometric data if 
-    the database is compromised, however this comes with the drawback that you must have a 
+    the database is compromised; however this comes with the drawback that you must have a 
     different stored fingerprint on each device. 
     \\ 
-    With a graphical password, The issue of complexity when choosing an image is important, 
+    With a graphical password, the issue of complexity when choosing an image is important, 
     with a very complex image, users are likely to forget where they clicked before and users 
     are also likely to pick the same points if they are using the same image. Even if an 
     attacker had never seen the image the user chose before gaining access to it, they would 
     likely be able to brute force guess some of the chosen points.
 
-    For the group web application assignment I believe that using the standard username/
+    For the group web application assignment, I believe that using the standard username/
     password method will be most suitable. It provides a high level of security when using 
     complex requirements, doesn't require special hardware like a fingerprint scanner, allows 
     storing passwords securely using hashes unlike a fingerprint or graphical password image 
@@ -410,7 +410,7 @@
     techniques and the effect on end-users with usability vs security concerns.
     \\
     In Part 2 I discussed username/password, biometric fingerprint scanning and graphical 
-    passwords as various authorisation techniques, how each of them work, their effectiveness, 
+    passwords as various authorisation techniques, how each of them works, their effectiveness, 
     the trade-offs with usability and security and which I recommend for implementation in 
     the group web application and why.
     
@@ -437,12 +437,12 @@
                   \Require $password$, the password for login
                   \Require $users$, the set of users and passwords that the system will 
                             compare the login against
-                  \Ensure \emph{response}, either a sucessful login or a response message
+                  \Ensure \emph{response}, either a successful login or a response message
                   \State{$Failure \leftarrow$ "The username/password is incorrect"}
                   \ForAll{$user$ in $users$}
                     \If{$username$ = $user.username$}
                       \If{$password$ = $user.password$}
-                        \State{$response \leftarrow Sucess$}
+                        \State{$response \leftarrow Success$}
                         \Comment{Username and password correct}
                       \Else
                         \State{$response \leftarrow Failure$}  
