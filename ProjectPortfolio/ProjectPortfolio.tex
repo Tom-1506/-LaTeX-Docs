@@ -45,6 +45,44 @@ to be used in a real-time graphics application. This method should be simple to
 use and implement into an existing OpenGL project.
 
 \subsection{Related Work}
+In this section various related works will be discussed with respect to how they 
+contribute to the main knowledge required for this project. These areas of main 
+knowledge are the branching structure, branch thickness and leaf placement of the 
+constructed trees.
+
+A paper by \cite{lindenmayer1968mathematical} proposes a theory for the development 
+of organisms using a cells current state and being combined with input that the cell 
+receives from its neighbour. Two new cells are produced from this development to replace 
+the existing cell and the cycle repeats for the two new cells. 
+
+This process of generating new outputs recursively to produce larger structures became
+``Lindenmayer systems'' or the abbreviated ``L-systems'' which became important tools 
+in pattern generation for future applications. L-systems became a common approach for the 
+generation of branching patterns in flora which is where the aim of this project is 
+concerned.
+
+Another early paper that is referenced by many later studies of the subject is by
+\cite{honda1971description} where he presented one of the earliest algorithmic 
+methods for creating a branching structure. This was done by starting with a parent 
+branch which then bifurcates into two child branches and rotating them by given 
+angles about the termination point of the parent branch, an example of which 
+can be seen in Figure \ref{fig:honda-bifurcation}. By continuing this 
+method they treated each child branch as another parent and bifuracted them to 
+expand the branching structure which would be continued until a desired result is 
+reached.
+
+\begin{figure}[h]
+    \caption{Example diagram of parent branch $P_AP_B$ bifurcating into child branches
+    $P_BP_1$ with a rotation of $\theta_1$ and $P_BP_2$ with a rotation of \textminus$\theta_2$}
+    \includegraphics[scale=0.5]{honda-bifurcation.PNG}
+    \label{fig:honda-bifurcation}
+    \centering
+\end{figure}
+
+This paper does not include any information relating to branch thickness or leaf 
+placement as its focus was only on the branching structure. However, this paper 
+provides a groundwork for many later studies that will be discussed in this project.
+
 
 
 \bibliography{bibfile}
