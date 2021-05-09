@@ -38,7 +38,7 @@ scenes for small developers with restricted resources.
 The purpose of including trees in a natural environment is to provide realism. 
 Trees are common natural structures present in even simple environments 
 throughout the history of computer graphics and have seen many iterations as 
-technology has advanced allowing for more detailed and realistic approaches.
+technology has advanced allowing for more detailed and realistic results.
 
 The aim of this project is to provide a method for creating and rendering trees 
 to be used in a real-time graphics application. This method should be simple to 
@@ -67,23 +67,57 @@ methods for creating a branching structure. This was done by starting with a par
 branch which then bifurcates into two child branches and rotating them by given 
 angles about the termination point of the parent branch, an example of which 
 can be seen in Figure \ref{fig:honda-bifurcation}. By continuing this 
-method they treated each child branch as another parent and bifuracted them to 
+method he treated each child branch as another parent and bifuracted them to 
 expand the branching structure which would be continued until a desired result is 
 reached.
 
-\begin{figure}[h]
+\begin{figure}[ht]
+    \includegraphics[scale=0.5]{honda-bifurcation.PNG}
+    \centering
+    \captionsetup{justification=centering}
     \caption{Example diagram of parent branch $P_AP_B$ bifurcating into child branches
     $P_BP_1$ with a rotation of $\theta_1$ and $P_BP_2$ with a rotation of \textminus$\theta_2$}
-    \includegraphics[scale=0.5]{honda-bifurcation.PNG}
     \label{fig:honda-bifurcation}
-    \centering
 \end{figure}
 
 This paper does not include any information relating to branch thickness or leaf 
 placement as its focus was only on the branching structure. However, this paper 
 provides a groundwork for many later studies that will be discussed in this project.
 
+\cite{bloomenthal1985modeling} presents his own tree generation process, specifically 
+for a maple tree. For the construction of the branches and 
+trunk he uses splines to create a tree skeleton, the use of splines rather than 
+straight lines is chosen to produce a more natural structure. He then uses generalised 
+cylinders with varying radii across the splines to create thickness. He also describes 
+the use of ramiforms, shown in Figure \ref{fig:bloomenthal-ramiform}, to make branch 
+bifurcations realisticly curve rather than have an acute separation.
+
+\begin{figure}[ht]
+    \includegraphics[scale=0.6]{bloomenthal-ramiform.PNG}
+    \centering
+    \captionsetup{justification=centering}
+    \caption{A ramiform used to create a realistic bifurcation}
+    \label{fig:bloomenthal-ramiform}
+\end{figure}
+
+\pagebreak
+The method he describes for leaf placement uses polygon structures to which he applies 
+a leaf texture, these polygons are then brought together in clusters that he calls 
+``configurations'' and for each limb that does not exceed a given diameter and that has 
+no outgoing limbs, a leaf configuration is chosen at random, scaled randomly and placed 
+at the limb tip. The interior lines of each polygon correspond to hinge points of the 
+leaves that could be manipulated to show leaf distorstion from wind. 
+
+\begin{figure}[ht]
+    \includegraphics[scale=0.3]{bloomenthal-leaves.PNG}
+    \centering
+    \captionsetup{justification=centering}
+    \caption{A leaf configuration: plan view (top) and perspective view (bottom)}
+    \label{fig:bloomenthal-leaves}
+\end{figure}
 
 
+
+\pagebreak
 \bibliography{bibfile}
 \end{document}
