@@ -117,6 +117,8 @@ leaves that could be manipulated to show leaf distortion from wind.
     \label{fig:bloomenthal-leaves}
 \end{figure}
 
+
+
 \cite{prusinkiewicz1996systems} presents a method of tree generation using an advanced 
 L-system, developed from the work of \cite{lindenmayer1968mathematical} and applying 
 that system to the bifurcating parent and child branch trios displayed by \cite{honda1971description}.
@@ -168,8 +170,9 @@ Lines $a_1$ and $a_2$ refer to the bifurcated child apices of the parent apex wh
 given a rotation of $\alpha_1$ and $\alpha_2$ radians about the $x$ axis and a rotation of 
 $\phi_1$ and $\phi_2$ radians about the $y$ axis. The length of the child apices is calculated 
 by multiplying the parent apex length $s$ by the corresponding length degradation parameters 
-$r_1$ and $r_2$ respectively. --width description--
+$r_1$ and $r_2$ respectively. A degradation in width is calculated using $q$ and $e$.
 
+\begin{comment}
 $\omega$: $A(100, w_0)$ 
 
 \indent $p_1$: $A(s, w) : s >= min \rightarrow !(w)F(s)$
@@ -177,8 +180,8 @@ $\omega$: $A(100, w_0)$
 \indent $a_1$ $[+(\alpha_1)/(\phi_1)A(s * r_1, w * q ^ e)]$
 
 \indent $a_2$ $[+(\alpha_2)/(\phi_2)A(s * r_2, w * (1 - q) ^ e)]$
+\end{comment}
 
-\begin{comment}
 \begin{figure}[ht]
     \includegraphics[scale=0.5]{parameterised-tree-lsystem.PNG} 
     \centering
@@ -186,8 +189,31 @@ $\omega$: $A(100, w_0)$
     \caption{Parameterised Tree L-system}
     \label{fig:parameterised-tree-lsystem}
 \end{figure}
-\end{comment}
 
-\pagebreak
+This L-system is used to produce various complex tree patterns, shown in section 
+\ref{app:parameterised-lsystem-trees} of the Appendix, ranging from mathematical fractal 
+patterns to some realistic looking structures.
+
+Prusinkiewicz et al. do not directly propose a method of leaf placement as this 
+paper focuses on tree structure and the manipulation of L-systems, they do however provide 
+an example where terminating apices of an L-system could be replaced with a leaf shape to 
+give a rudimentary leaf placement approach.
+
+
+
+%Bibliography
 \bibliography{bibfile}
+
+%Appendix
+\appendix{}
+\begin{figure}[ht]
+    \section{Parameterised L-system Trees}
+    \label{app:parameterised-lsystem-trees}
+    \includegraphics[scale=0.7]{tree-lsystem-results.PNG} 
+    \centering
+    \captionsetup{justification=centering}
+    \caption{Tree structures produced using the proposed L-system described by \cite{prusinkiewicz1996systems}}
+    \label{fig:tree-lsystem-results}
+\end{figure}
+
 \end{document}
