@@ -11,17 +11,21 @@
 
 \summary
 {
-The inclusion of trees in virtual environments trying to replicate nature is essential 
-and the branching structure of trees is vital is representing many other types of 
-foliage.
+The inclusion of trees in virtual environments when trying to represent nature is 
+essential and the branching structure of trees is vital is representing many other 
+types of foliage.
+
 This project covers the research of related work involved with algorithmic generation 
-of trees and the mathematical basis for the discussed approaches.
+of trees and the mathematical basis for the discussed approaches. The underlying 
+principles relating to the algorithmic production of fractal patterns helpfully cooincides 
+with the requirements for producing believable branching structures. 
+
 The project aim is to convert and extend the Lindenmayer-system based tree construction 
 method presented by \citep{prusinkiewicz1996systems} to be used as an independent 
-OpenGL module. 
-The module should allow the addition of trees to a real-time environment with minimal 
-user interaction, avoiding the difficulties and expenses of manually producing tree 
-models.
+OpenGL module, the intuitive parametric L-system model was chosen because of it's 
+ability to produce diverse results with varying input. This module allows the addition 
+of trees to a real-time environment with minimal user interaction, avoiding the difficulties 
+and expenses of manually producing tree models.
 }
 
 \acknowledgements
@@ -35,7 +39,8 @@ support during the COVID-19 lockdowns.
 \begin{document}
 
 \section{Introduction}
-In this section a context will be provided for the 
+This section contains a contextual introduction for the project and a collection of 
+related work found during the research phase of development. 
 
 \subsection{Context}
 Creating and rendering realistic models of trees manually requires advanced expertise 
@@ -57,10 +62,11 @@ contribute to the main knowledge required for this project, ordered chronologica
 These areas of main knowledge are the branching structure, branch thickness and leaf 
 placement of the constructed trees.
 
-A paper by \cite{lindenmayer1968mathematical} proposes a theory for the development 
+Aristid Lindenmayer proposed an early theory for the development 
 of organisms using a cells current state and being combined with input that the cell 
-receives from its neighbour. Two new cells are produced from this development to replace 
-the existing cell and the cycle repeats for the two new cells. 
+receives from its neighbour \citep{lindenmayer1968mathematical1} \citep{lindenmayer1968mathematical2}. 
+Two new cells are produced from this development to replace the existing cell and the 
+cycle repeats for the two new cells. 
 
 This process of generating new outputs recursively to produce larger structures became
 ``Lindenmayer systems'' or the abbreviated ``L-systems'' which became important tools 
@@ -92,55 +98,57 @@ placement as its focus was only on the branching structure. However, this paper
 provides a groundwork for many later studies that will be discussed in this project.
 
 \cite{bloomenthal1985modeling} presents his own tree generation process, specifically 
-for a maple tree. For the construction of the branches and 
-trunk he uses splines to create a tree skeleton, the use of splines rather than 
-straight lines is chosen to produce a more natural structure. He then uses generalised 
-cylinders with varying radii across the splines to create thickness. He also describes 
-the use of ramiforms, shown in Figure \ref{fig:bloomenthal-ramiform}, to make branch 
-bifurcations realisticly curve rather than have an acute separation.
+for a maple tree. He wanted to move beyond simply the branching pattern of a tree which 
+most efforts before had focused on \citep{brooks1974geometry,marshall1980procedure,kawaguchi1982morphological,aono1984botanical,smith1984plants}.
+For the construction of the branches and trunk he uses splines to create a tree skeleton, 
+the use of splines rather than straight lines is chosen to produce a more natural structure. 
+He then uses generalised cylinders with varying radii across the splines to create thickness. 
+He also describes the use of ramiforms, shown in Figure \ref{fig:bloomenthal-ramiform}, to 
+make branch bifurcations realisticly curve rather than have an acute separation.
 
 \begin{figure}[ht]
-    \includegraphics[scale=0.6]{bloomenthal-ramiform.PNG}
+    \includegraphics[scale=0.35]{bloomenthal-ramiform.PNG}
     \centering
     \captionsetup{justification=centering}
     \caption{A ramiform used to create a realistic bifurcation}
     \label{fig:bloomenthal-ramiform}
 \end{figure}
 
-The method he describes for leaf placement uses polygon structures to which he applies 
+The method he describes for leaf placement uses polygonal structures to which he applies 
 a leaf texture, these polygons are then brought together in clusters that he calls 
 ``configurations'' and for each limb that does not exceed a given diameter and that has 
 no outgoing limbs, a leaf configuration is chosen at random, scaled randomly and placed 
 at the limb tip. The interior lines of each polygon correspond to hinge points of the 
-leaves that could be manipulated to show leaf distortion from wind. 
+leaves that could be manipulated to show leaf distortion from wind. This method provides 
+a more realistic result than the use of simple primitives \citep{kawaguchi1982morphological,lintermann1999interactive,candussi2005rendering}.
 
 \begin{figure}[ht]
-    \includegraphics[scale=0.35]{bloomenthal-leaves.PNG} 
+    \includegraphics[scale=0.24]{bloomenthal-leaves.PNG} 
     \centering
     \captionsetup{justification=centering}
-    \caption{A leaf configuration: plan view (top) and perspective view (bottom)}
+    \caption{A leaf ``configuration'': plan view (top) and perspective view (bottom)}
     \label{fig:bloomenthal-leaves}
 \end{figure}
 
-
-
 \cite{prusinkiewicz1996systems} presents a method of tree generation using an advanced 
-L-system, developed from the work of \cite{lindenmayer1968mathematical} and applying 
+L-system, developed from the work of \cite{lindenmayer1968mathematical1} and applying 
 that system to the bifurcating parent and child branch trios displayed by \cite{honda1971description}.
 Their chosen method for representing their models is by using turtle graphics in a 3D 
 space and the string generated from the L-system uses symbols that correspond to controlling 
-the turtles orientation in space.
+the turtles orientation in space \citep{szilard1979interpretation,prusinkiewicz1986graphical}.
 
 Prusinkiewicz et al. produce a variation on a standard L-system known as a ``deterministic''
 L-system or ``D0L-system'' which produces the same result every time. They demonstrate the 
-application to turtle graphics with a simple snowflake fractal shown in Figure \ref{fig:snowflake-lsystem}.
+application to turtle graphics with the well-known snowflake curve \citep{mandelbrot1982fractal,koch1906methode} 
+shown in Figure \ref{fig:snowflake-lsystem}.
 
 The D0L-system uses an Axiom string and a production rule to recursively develop a longer and 
 more complex string. Once a chosen result is reached, the string is traversed and each character 
-or group of characters corresponds to the movement of the turtle. For example the D0L-system 
-below represents that of the snowflake fractal where $F(s)$ corresponds to a movement forward 
-of distance $s$ and $+(r)$ or $-(r)$ correspond to a rotation positively or negatively about the
-$x$ axis by $r$ degrees.
+or group of characters corresponds to the movement of the turtle. Fractals give a convenient 
+illustration of the basic workings of an L-system \citep{prusinkiewicz1986graphical,prusinkiewicz2012algorithmic}. 
+For example, the D0L-system below represents that of the snowflake fractal where $F(s)$ 
+corresponds to a movement forward of distance $s$ and $+(r)$ or $-(r)$ correspond to a rotation 
+positively or negatively about the $x$ axis by $r$ degrees.
 
 \textbf{Axiom} $\omega$: $F(1) - (120)F(1) - (120)F(1)$ 
 
@@ -151,16 +159,16 @@ each line segment with a polygonal shape where the line segment has been given a
 triangular appendage. The Production $p_1$ can be visualised as so:
 
 \begin{figure}[ht]
-        \includegraphics[scale=0.4]{production_p1.PNG}
+        \includegraphics[scale=0.3]{production_p1.PNG}
         \centering
-        \includegraphics[scale=0.5]{triangle_snowflake_lsystem.PNG}
+        \includegraphics[scale=0.4]{triangle_snowflake_lsystem.PNG}
         \centering
         \caption{The visualised production rule $p_1$, axiom and first 3 recursions 
         defined by the snowflake D0L-system from \citep{prusinkiewicz1996systems} pg.12}
         \label{fig:snowflake-lsystem}
 \end{figure}
 
-Prusinkiewicz et al. went on to present a complex D0L-system to be used for constructing 
+Prusinkiewicz et al. go on to present a complex D0L-system to be used for constructing 
 tree structures by creating a Parametric L-system allowing for input to alter the axiom 
 string producing different results along with using a conditional requirement to 
 decide automatically when to stop recursing. 
@@ -177,7 +185,6 @@ $\phi_1$ and $\phi_2$ radians about the $y$ axis. The length of the child apices
 by multiplying the parent apex length $s$ by the corresponding length degradation parameters 
 $r_1$ and $r_2$ respectively. A degradation in width is calculated using $q$ and $e$.
 
-\begin{comment}
 $\omega$: $A(100, w_0)$ 
 
 \indent $p_1$: $A(s, w) : s >= min \rightarrow !(w)F(s)$
@@ -185,15 +192,6 @@ $\omega$: $A(100, w_0)$
 \indent $a_1$ $[+(\alpha_1)/(\phi_1)A(s * r_1, w * q ^ e)]$
 
 \indent $a_2$ $[+(\alpha_2)/(\phi_2)A(s * r_2, w * (1 - q) ^ e)]$
-\end{comment}
-
-\begin{figure}[ht]
-    \includegraphics[scale=0.5]{parameterised-tree-lsystem.PNG} 
-    \centering
-    \captionsetup{justification=centering}
-    \caption{Parameterised Tree L-system}
-    \label{fig:parameterised-tree-lsystem}
-\end{figure}
 
 This L-system is used to produce various complex tree patterns, shown in section 
 \ref{app:parameterised-lsystem-trees} of the Appendix, ranging from mathematical fractal 
@@ -204,9 +202,74 @@ paper focuses on tree structure and the manipulation of L-systems, they do howev
 an example where terminating apices of an L-system could be replaced with a leaf shape to 
 give a rudimentary leaf placement approach.
 
+\cite{weber1995rendering} produced a model for creating and rendering trees that emphasises 
+overall geometric structure of the tree rather than strictly following botanical principles 
+which they credit similarity to the aims of \cite{reeves1985approximate}. 
+They admit that their model resembles that proposed by \cite{oppenheimer1986real} which used 
+fractals with parameters such as ``branching angle'' and ``helical twist'' to produce trees. 
+However, Weber et al. propose that the use of fractal theory self similarity by Oppenheimer 
+is not necessesary and restricts results to only a small number of basic trees.
 
+Weber et al. used cylinders and cones as branch segments, 
+each child branches base circle coinciding with the top circle of the parent branch. 
+Transformation of the child branches being controlled through the intentionally intuitively named 
+parameters that can be edited by the user to produce a desired result.
+
+Figure \ref{fig:weber-splits} shows some of the many parameters that can be used to affect 
+tree generation, \emph{0SegSplits} defines the number of splits at each branch termination, 
+\emph{0SplitAngle} controls the angle at each split, \emph{0CurveRes} refers to the taper 
+given to each branch to slowly reduce thickness of each branch, and \emph{1Rotate} defines 
+the $y$ axis rotation of the branch. The number in front of each parameter refers to a branch, 
+0 being the root branch, the values of parent branch parameters are passed on to the child 
+branches. 
+
+\begin{figure}[ht]
+    \includegraphics[scale=0.5]{weber-splits.PNG} 
+    \centering
+    \captionsetup{justification=centering}
+    \caption{Example of tree parameters}
+    \label{fig:weber-splits}
+\end{figure}
+
+Leaf placement is handled using a ``Level'' system that refers to the number of recursions from 
+the root branch. If a parameter \emph{Leaves} is non-zero then the final level of recursion is 
+used to place leaves on the final set of child branches, using a set of leaf specific parameters 
+to control the rotation of each leaf. The shape of the leaves is controlled using the parameter 
+\emph{LeafShape} allowing for different tree species to be represented by adding different leaf 
+shapes.
+\cite{weber1995rendering} served as a groundwork for many future approaches and advances in tree 
+rendering \citep{remolar2004rendering,wesslen2005real}. Weber himself went on to produce a 
+simulation focused method of tree generation including some extra features such as branches 
+avoiding obstacles \citep{weber2008simulation}.
+
+Another branch structure method, that differs uniquely from methods mentioned above, is that of 
+space colonisation \citep{runions2007colonization}. The steps of this method can be seen in Figure \ref{fig:space-colonisation} 
+and works by producing a three-dimensional envelope to be used for the tree crown containing a set 
+of ``attraction points'' which are used as targets for branch growth. The tree skeleton interatively 
+expands by producing new branches in the direction of the attraction points. Once an attraction point 
+is reached by a branch, the point is removed and the branch terminates. This process is continued 
+until all attraction points are reached, when no new branches are within attraction radius of 
+remaining points or when a user inputted number of iterations has been reached. 
+
+\begin{figure}[ht]
+    \includegraphics[scale=0.5]{space-colonisation.PNG} 
+    \centering
+    \captionsetup{justification=centering}
+    \caption{Space colonisation steps}
+    \label{fig:space-colonisation}
+\end{figure}
+
+Once a tree skeleton has been finalised they determine the width of the limbs using the pipe 
+model \citep{shinozaki1964quantitative} and the tree geometry is modeled using generalised 
+cylinders \citep{bloomenthal1985modeling}.
+
+A leaf placement method is not provided as part of this paper due to it focusing solely on 
+branch construction. However, they do suggest that the placement density of leaves or flowers 
+could be controlled using absolute distance from the root position to give a realistic dispersion 
+of leaves throughout the tree crown.
 
 %Bibliography
+\pagebreak
 \bibliography{bibfile}
 
 %Appendix
