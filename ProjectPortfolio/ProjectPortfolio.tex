@@ -22,7 +22,7 @@ with the requirements for producing believable branching structures.
 
 The project aim is to convert and extend the Lindenmayer-system based tree construction 
 method presented by \citep{prusinkiewicz1996systems} to be used as an independent 
-OpenGL module, the intuitive parametric L-system model was chosen because of it's 
+OpenGL module, the intuitive parametric L-system model was chosen because of its 
 ability to produce diverse results with varying input. This module allows the addition 
 of trees to a real-time environment with minimal user interaction, avoiding the difficulties 
 and expenses of manually producing tree models.
@@ -267,6 +267,108 @@ A leaf placement method is not provided as part of this paper due to it focusing
 branch construction. However, they do suggest that the placement density of leaves or flowers 
 could be controlled using absolute distance from the root position to give a realistic dispersion 
 of leaves throughout the tree crown.
+
+\section{Design and Development}
+After going through the relevant related work, the chosen method for constructing the trees was 
+using an L-system. This was chosen because a complex parameterised L-system could be designed to 
+produce various different types of trees while using the same logic pipeline. Therefore, the 
+module could be relatively simple and contained, and still be quite flexible with its results.
+
+Using an L-system meant that a basic branch object was needed to construct each section of the 
+tree. The first approach investigated was the use of quadric cylinders, that could be 
+used to give branches thickness. Quadric cylinders could also be defined with a taper allowing 
+for a smooth reduction in thickness towards external branches. Figure \ref{fig:quadric-cylinders} shows 
+an early test bifurcation using quadric cylinders.
+
+\begin{figure}[ht]
+    \includegraphics[scale=0.5]{quadric-cylinders.png} 
+    \centering
+    \captionsetup{justification=centering}
+    \caption{3 quadric cylinders positioned as a bifurcation}
+    \label{fig:quadric-cylinders}
+\end{figure}
+
+When positioned correctly, the join between 
+overlapping cylinders was acceptably smooth producing a believable bifurcation. However, this 
+example was made by hardcoding transformation for each quadric that was applied separately with 
+no direct relationship between the parent and child branches. The quadric class was also closed 
+off from being modified, meaning that the construction method would be restricted to however the 
+quadrics can be manipulated and I would not be able to make any tweaks to how the quadrics are 
+constructed to assist with the L-system generation. Another foreseen difficulty was the issue of
+texturing, which would me more complex when using quadrics.
+Because of this the decision was made to instead create a cylinder class specifically for this 
+purpose, therefore allowing better control of generating the models and allowing for tweaks to 
+made when integrating them with the L-system. 
+
+The cylinder class was intially designed to produce a line rather than an entire cylinder so that 
+testing could be carried out more quickly and tree skeletons would be easier to analyse for 
+mistakes in the L-system. Unfortunately the cylinder class did not advance further than using 
+lines for the construction but this will be explained in the Evaluation. 
+
+These cylinder objects are constructed using vertex array objects and vertex buffer objects with 
+the aim of being able to store the geometry data of a constructed tree as a vector of these 
+objects and then simply interate through and load each cylinder object. The cylinder object is 
+constructed using a glm::vec3 for the base and top centre point of the cylinder, and has a top 
+and bottom radius that would be used to control tapering. 
+
+To test the use of this cylinder class and develop understanding of L-system production some 
+basic L-systems were produced. These included a basic binary tree, and a barnsley fern L-system.
+The L-system for a binary tree is displayed below.
+
+\begin{figure}[ht]
+    Binary Tree L-system:
+
+    $\omega$: $a$ 
+
+    $p_1$: $a \rightarrow b[a]a$
+
+    $p_2$: $b \rightarrow bb$
+    \label{fig:b-tree-string-system}
+\end{figure}
+
+These production rules are applied for a set number of recursions to control the size of the 
+resulting tree. The first 3 recursions of this system, with an axiom of $a$, are:
+
+1: b[a]a
+
+2: bb[b[a]a]b[a]a
+
+3: bbbb[bb[b[a]a]b[a]a]bb[b[a]a]b[a]a
+
+Each character refers to a certain action when constructing the tree. In this case a means draw 
+a branch segment terminating with two small lines to represent a leaf, b means draw a branch 
+segment, $[$ means push position and angle and rotate 45 degrees left about $x$ and $]$ means 
+pop position and angle and rotate 45 degrees right about $x$. Six recursions using this system 
+produces the binary tree shown in Figure \ref{fig:b-tree-fern-string}.
+
+A somewhat more advanced L-system, used to test whether the line segments can produce a more natural 
+shape, is an L-system designed to create an adapted version of the Barnsley fern fractal. The 
+production rules for this L-system are shown below.
+
+\begin{figure}[ht]
+    Barnsley Fern L-system:
+
+    $\omega$: $a$ 
+
+    $p_1$: $a \rightarrow b+[[a]-a]-b[-ba]+a$
+
+    $p_2$: $b \rightarrow bb$
+    \label{fig:b-fern-string-system}
+\end{figure}
+
+This L-system produces a natural looking branched fern pattern, shown in Figure \ref{fig:b-tree-fern-string}. 
+This proves that this method of line segments can be used for this projects aim.
+
+\begin{figure}[ht]
+    \includegraphics[scale=0.4]{b-tree-fern-string.png} 
+    \centering
+    \captionsetup{justification=centering}
+    \caption{Binary Tree L-system result after six recursions (left) and Barnsley Fern L-system
+             after five recursions (right)}
+    \label{fig:b-tree-fern-string}
+\end{figure}
+
+
 
 %Bibliography
 \pagebreak
