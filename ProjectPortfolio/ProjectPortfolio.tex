@@ -1,4 +1,6 @@
 \documentclass[final]{cmpreport}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 \usepackage{comment}
 \graphicspath{ {./images/} }
 
@@ -339,7 +341,8 @@ Each character refers to a certain action when constructing the tree. In this ca
 a branch segment terminating with two small lines to represent a leaf, b means draw a branch 
 segment, $[$ means push position and angle and rotate 45 degrees left about $x$ and $]$ means 
 pop position and angle and rotate 45 degrees right about $x$. Six recursions using this system 
-produces the binary tree shown in Figure \ref{fig:b-tree-fern-string}.
+produces the binary tree shown in Figure \ref{fig:b-tree-fern-string}, and you can see the 
+steps used to construct the tree using this method in section \ref{app:b-tree-lsystem-algo}.
 
 A somewhat more advanced L-system, used to test whether the line segments can produce a more natural 
 shape, is an L-system designed to create an adapted version of the Barnsley fern fractal. The 
@@ -384,6 +387,47 @@ This proves that this method of line segments can be used for this projects aim.
     \captionsetup{justification=centering}
     \caption{Tree structures produced using the proposed L-system described by \cite{prusinkiewicz1996systems}}
     \label{fig:tree-lsystem-results}
+\end{figure}
+
+\begin{figure}[ht]
+    \section{Binary Tree L-system Algorithm}
+    \label{app:b-tree-lsystem-algo}
+    \begin{algorithm}[H]
+    \caption{generateBinaryTree(\emph{axiom, numRecursions}) {\textbf{return}} \emph{branchList}}
+        \begin{algorithmic}[1]
+        \Require $axiom$, the initial string for the L-system
+        \Require $numRecursions$, number of times to run production rules
+        \Ensure \emph{branchList}, list of branch objects that can be rendered
+        \State $systemString \leftarrow getLsystemString(axiom, numRecursions)$
+        \State $currentPosition \leftarrow$ bottom of tree
+        \State $rotationX \leftarrow 0$
+        \State $positionList$, $angleList$ 
+        \ForAll{$character$ in $systemString$}
+            \If{$character$ = $a$}
+                \State $newBranch \leftarrow$ short terminating branch
+                \State rotate $newBranch$ by $rotationX$ about $x$-axis
+                \State translate bottom of $newBranch$ to $currentPos$
+                \State push $newBranch$ onto $branchList$
+            \ElsIf{$character$ = $b$}
+                \State $newBranch \leftarrow$ long branch
+                \State rotate $newBranch$ by $rotationX$ about $x$-axis
+                \State translate bottom of $newBranch$ to $currentPos$
+                \State push $newBranch$ onto $branchList$
+                \State $currentPos \leftarrow$ top of $newBranch$
+            \ElsIf{$character$ = $[$}
+                \State push $currentPos$ onto $positionList$
+                \State push $rotationX$ onto $angleList$
+                \State $rotationX \leftarrow rotationX + 45$
+            \ElsIf{$character$ = $]$}
+                \State pop $positionList$ to $currentPos$
+                \State pop $angleList$ to $rotationX$
+                \State $rotationX \leftarrow rotationX - 45$
+            \EndIf
+        \EndFor
+        \State \Return $branchList$
+        \end{algorithmic}
+    \end{algorithm}
+    \caption{Construction method with Binary Tree L-system}
 \end{figure}
 
 \end{document}
