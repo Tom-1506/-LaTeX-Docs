@@ -371,6 +371,175 @@ This proves that this method of line segments can be used for this projects aim.
     \label{fig:b-tree-fern-string}
 \end{figure}
 
+Having confirmed the effectiveness of the cylinder class to produce lines correctly, the next 
+step was to produce a more advanced L-system to create more details structures and make the 
+transition to 3D. 
+
+The decision was made to adapt the parametric L-system described by \cite{prusinkiewicz1996systems}, 
+discussed in the related work section, into OpenGL using the cylinder class to generate lines. 
+This required developed understanding of L-systems and adaptation from the proposed turtle graphics
+approach, over to using OpenGL vertices.
+
+This parametric L-system was described in the related work section but will be re-iterated with 
+respect to it's adaptation in OpenGL.
+
+$\omega$: $A(100, w_0)$ 
+
+\indent $p_1$: $A(s, w) : s >= min \rightarrow !(w)F(s)$
+
+\indent $a_1$ $[+(\alpha_1)/(\phi_1)A(s * r_1, w * q ^ e)]$
+
+\indent $a_2$ $[+(\alpha_2)/(\phi_2)A(s * r_2, w * (1 - q) ^ e)]$
+
+The initial approach taken was to try and implement the classical L-system result of string 
+generation and then producing results by iterating through the resulting string, such as the 
+binary tree and barnsley fern described above. However, after an attempted implementation of 
+this approach, the decision was made to switch to an object oriented construction.
+
+The L-system production rules takes an ``Apex'' defined as $A(s, w)$ and produces the two child 
+apices $a_1$ and $a_2$ which are then also passed through the production rules to produce their 
+own child apices. This proved clumsy when trying to use strings and therefore an Apex class was 
+created to represent the relevant data of each Apex that could then be used to construct the 
+branches. 
+
+The data defined in the Apex class includes: 
+\begin{itemize}
+    \item The \emph{length} and \emph{width} of the branch.
+    \item The \emph{rotateAlpha} and \emph{rotatePhi} which refer to the rotation about the $x$ and $y$ axis 
+          respectively.
+    \item Pointers to the parent Apex and child apices.
+    \item The \emph{localRoot} of the Apex which is a glm::vec3 used to represent the 3D coordinates 
+          of the base of the branch.
+    \item The integer \emph{level} that stores the number of recursions away and Apex is from the root Apex.
+    \item A boolean \emph{isRoot} to check whether an Apex is the root Apex or not.
+    \item A rotation matrix used to rotate apices using \emph{rotateAlpha} and \emph{rotatePhi} with 
+          respect to the cumulative rotations of the parent Apex.
+\end{itemize}
+
+These apices are used to create the line segments required to generate the tree structure. The 
+Line segments are stored in a vector and then, when loading the scene, iterated through to render the tree.
+
+The parameters required for this L-system are passed into a function and then used to construct 
+the Apex object necessary for the tree. These variables are:
+
+\begin{itemize}
+    \item \emph{rootPos}, a glm::vec3 representing the 3D coordinates where you want the tree to be rendered.
+    \item \emph{startBranchLength}, the starting length of branches.
+    \item \emph{minBranchLength}, the minimum branch length used to check the conditional statement in the 
+          L-system, if the current branch length is lower than the minimum then the system stops recursing.
+    \item \emph{startBranchWidth}, the starting branch width.
+    \item \emph{angleAlpha1} and \emph{angleAlpha2} control rotations about the $x$-axis.
+    \item \emph{anglePhi1} and \emph{anglePhi2} control rotations about the $y$-axis.
+    \item \emph{lengthDegrade1} and \emph{lengthDegrade2} control the rate at which the length of branches 
+          degrades from parent to child.
+    \item \emph{count}, used to control the number of recursions directly if the minimum length approach 
+          is not suitable.
+\end{itemize}
+
+Alterations of these variables can be used to produce vastly different outcomes as shown by the 
+results of \cite{prusinkiewicz1996systems}, which are included in section \ref{app:parameterised-lsystem-trees}.
+
+To construct the apices vector, these variables are passed through to a recursive function that 
+creates each Apex object, sets parent and child relationships, and handles length degredation.
+This function used to construct the apices vector is shown in section \ref{app:construct-tree}. 
+The initial implementation for constructing the apices vector used a simple loop, this made 
+setting parent-child relationships unecessarilly obtuse however. Therefore the recursive method 
+was developed to streamline the construction process and also improve readability of the code.
+
+Having constructed the apices vector the last step was to iterate through each Apex and use their 
+data to render a line. This is where most issues arose in development as multiple iterations were 
+used for applying rotations before a working solution was found.
+
+One main mistake in the development process was a misunderstanding of the implementation from 
+\cite{prusinkiewicz1996systems} due to their use of a proprietary coordinate system to be used 
+with turtle graphics. Rather than $x, y, z$ they used $u, h, l$ shown in Figure \ref{fig:uhl-coords} 
+which lead to a mistake believing that phi rotations should be applied about the $z$-axis 
+instead of the $y$-axis. Unfortunately this issue was not immediately apparent and lead to many 
+different attempts to remedy the problem until this mistake was realised. The examples of each 
+rotation method discussed below will assume the rotation about the $y$-axis.
+
+\begin{figure}[ht]
+    \includegraphics[scale=0.4]{uhl-coords.PNG} 
+    \centering
+    \captionsetup{justification=centering}
+    \caption{Axes used to control the turtle in three dimensions}
+    \label{fig:uhl-coords}
+\end{figure}
+
+Initially, rotations were applied by calculating the rotation of each element of the coordinate,
+
+For the $x$-axis:
+
+$x = x$
+
+$y = y\cos(rotationAlpha) - z\sin(rotationAlpha)$
+
+$z = y\sin(rotationAlpha) + z\cos(rotationAlpha)$
+
+For the $y$-axis:
+
+$x = x\cos(rotationPhi) + z\sin(rotationPhi)$
+
+$y = y$
+
+$z = z\cos(rotationPhi) - x\sin(rotationPhi)$
+
+These were then simplified to complete all rotations with just one calculation for each element 
+rather than having to run separate calculations for \emph{rotationAlpha} and \emph{rotationPhi}.
+
+$x = length\cos(rotationPhi)\sin(rotationAlpha)$
+
+$y = length\sin(rotationPhi)\sin(rotationAlpha)$
+
+$z = length\cos(rotationAlpha)$
+
+The final method that proved successful was the use of rotation matrices as part of the Apex 
+objects with the glm::rotate function. When the parent of a child Apex is set in the apices vector construction process, the 
+rotation matrix of the child is calculated using the rotation matrix of the parent so that 
+the angle of the parent branch is taken into account. 
+
+The code below is a simplification of glm::rotate and assumes local variables of an 
+Apex object, rotation values are converted to radians for use with glm::rotate and the last 
+parameter refers to the axis of rotation shown $x, y$ however, in code this would be 
+a glm::vec3 with a 1 in the parameter corresponding to the chosen axis.
+
+Alpha rotation:
+
+$rotationMatrix = rotate(parentRotationMatrix, rotationAlpha, x$
+
+Phi rotation:
+
+$rotationMatrix = rotate(rotationMatrixAlpha, rotationPhi, y$
+
+The rotation Matrix of an Apex object can then be used to rotate a point for creating a line 
+segment along with the other Apex attributes. The algorithm below displays how the apices 
+vector is used to create lines ready to be rendered into a scene.
+
+\begin{figure}[ht]
+    \begin{algorithm}[H]
+    \caption{constructLines(\emph{apices}) {\textbf{return}} \emph{lines}}
+        \begin{algorithmic}[1]
+        \Require $apices$, vector of Apex objects
+        \Ensure \emph{lines}, vector of line objects
+        \ForAll{$Apex$ in $apices$}
+            \State \emph{top} $\leftarrow ApexRotationMatrix * (0, ApexLength, 0, 1)$ 
+            \State \emph{top} $\leftarrow (topX + ApexX, topY + ApexY, topZ + ApexZ)$ 
+            \State \emph{newLine} $\leftarrow generateLine(ApexLocalRoot, top)$ 
+            \State Push \emph{newLine} onto \emph{lines}
+            \If{\emph{Apex} has first child}
+                \State Set \emph{Apex} first child \emph{localRoot} to \emph{top}
+            \EndIf
+            \If{\emph{Apex} has second child}
+                \State Set \emph{Apex} second child \emph{localRoot} to \emph{top}
+            \EndIf
+        \EndFor
+        \State \Return \emph{lines}
+        \end{algorithmic}
+    \end{algorithm}
+    \caption{Construction of line segments ready for rendering}
+    \label{fig:construct-lines}
+\end{figure}
+
 
 
 %Bibliography
@@ -428,6 +597,37 @@ This proves that this method of line segments can be used for this projects aim.
         \end{algorithmic}
     \end{algorithm}
     \caption{Construction method with Binary Tree L-system}
+\end{figure}
+
+\begin{figure}[ht]
+    \section{Construct Apices Vector}
+    \label{app:construct-tree}
+    \begin{algorithm}[H]
+    \caption{constructTree(\emph{root, apices, a1, a2, p1, p2, l1, l2, r1, r2, min, w1, w2, count}) {\textbf{return}} \emph{branchList}}
+        \begin{algorithmic}[1]
+        \Require $root$, parent Apex of this recursion
+        \Require $apices$, current vector of all generated apices
+        \Require Generation variables, explained in the caption below
+        \Ensure \emph{apices}, vector of Apex objects
+        \State Create new Apex object \emph{apex1} with variables \emph{a1, p1, l1*r1, w1}
+        \State Create new Apex object \emph{apex2} with variables \emph{a2, p2, l2*r2, w2}
+        \State Set children of \emph{root} to \emph{apex1} and \emph{apex2}
+        \State Add \emph{root} to \emph{apices}      
+        \State \emph{count} $\leftarrow$ \emph{count} $- 1$  
+        \If{\emph{count} $> 0$}
+            \If{\emph{l1} $>$ \emph{min}}
+                \State \emph{apices} $\leftarrow$ constructTree(\emph{apex1, apices, a1, a2, p1, p2, l1*r1, l1*r1, r1 r2, min, w1, w2, count})
+            \EndIf
+            \If{\emph{l2} $>$ \emph{min}}
+                \State \emph{apices} $\leftarrow$ constructTree(\emph{apex2, apices, a1, a2, p1, p2, l2*r2, l2*r2, r1 r2, min, w1, w2, count})
+            \EndIf
+        \EndIf
+        \State \Return $apices$
+        \end{algorithmic}
+    \end{algorithm}
+    \caption{Construction of apices vector: \emph{a1}, \emph{a2}, \emph{p1} and \emph{p2} are rotations,
+            \emph{l1} and \emph{l2} are lengths, \emph{r1} and \emph{r2} are length degrade values, 
+            \emph{w1} and \emph{w2} are widths.}
 \end{figure}
 
 \end{document}
