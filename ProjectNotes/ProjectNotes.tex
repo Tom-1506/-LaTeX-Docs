@@ -138,37 +138,117 @@ change my design from using lines as a skeleton and then applying thickness afte
 producing an L-system that accounts for thickness of branches by using cylinders instead of lines.
 
 \section*{Week 1 Sem 2, 1st Feb - 7th Feb}
+Over the Christmas break I have been making some progress in the early stages of the implementation 
+and testing how I should approach the tree construction problem. 
 
+My plan is to use some kind of L-system for the branch construction but at the moment I am 
+testing the best way to represent the branches. So far I have tested the use of gluCylinders 
+which produce a decent result with simple input. However, I will most likely choose to make my 
+own cylinder loading class so I have more control over the construction process. 
 
 \section*{Week 2 Sem 2, 8th Feb - 14th Feb}
+After discussing the choice of using gluCylinders or my own models with Stephen, we have come 
+to the conclusion that making my own models would be more useful because I would be able to 
+fully understand the generation process, and fix any problems that may appear while testing.
 
+Having decided to use my own models rather than gluCylinders I spent some of this week putting 
+together the relevant methodsm for constructing my own cylinder models such as the vertex 
+buffer objects required. Time was spent making sure that I properly understood the underlying 
+concepts required to produce this class. 
 
 \section*{Week 3 Sem 2, 15th Feb - 21st Feb}
-
+This week I finished up the basic cylinder construction methods but have decided to just use 
+line construction for now. This is due to the cylinder geometry being very complicated to work 
+with, and also because at the moment in the early stages of testing it will be easier to diagnose 
+problems in construction when looking at simple lines. 
 
 \section*{Week 4 Sem 2, 22nd Feb - 28th Feb}
-
+To test the use of my line construction and to develop my understanding of L-systems, I have 
+decided to reproduce some example L-systems found online. These L-systems are the binary tree 
+and barnsley fern. The binary tree will be useful for testing rotations to make sure that I 
+can manage the regular rotations required, and due to the binary tree being a very simple shape 
+it will be easy to diagnose any problems. The barnsley fern will be a useful test to see if 
+this line construction method will be appropriate for creating natural patterns. 
 
 \section*{Week 5 Sem 2, 1st Mar - 7th Mar}
+This week I finalised the basic binary tree and barnsley fern L-system generation which produce 
+the expected results after some bug fixing. It seems that the most likely issue when translating 
+these systems to OpenGL is how to properly manage rotations to produce the expected results. 
 
+Having shared my results with Stephen I am now happy to move on to try and develop a more advanced 
+L-system that will be able to generate 3D tree structures.
 
 \section*{Week 6 Sem 2, 8th Mar - 14th Mar}
-
+I have decided that for the advanced L-system I will adapt a parametric L-system from an essential 
+paper I found during the literature review stage. This paper by Przemys\l{}aw Prusinkiewicz, 
+Mark Hammel, Jim Hanan and Radom\'{i}r M\v{e}ch describes many essentials for advancing L-systems 
+that will be useful in developing my understanding.
 
 \section*{Week 7 Sem 2, 15th Mar - 21st Mar}
+This week I spent some more time reading through the paper by Prusinkiewicz et al. and have learned 
+more about L-systems as well as the example that I am going to adapt. This example from the paper 
+is also well documented with some results from chosen inputs so this will assist in the testing 
+process of my adaptation because I will be able to benchmark my results to that of the paper.
 
+I have started to implement the logic required for this L-system and will try and produce it the 
+same way I did with the binary tree and barnsley fern examples.
 
 \section*{Week 8 Sem 2, 22nd Mar - 28th Mar}
+This week I have still been working on adapting the advanced L-system. However, I have decided 
+to stray from the classical approach of L-system string generation to instead use an object 
+oriented approach. L-systems are commonly used to generate strings and then the resulting string 
+is iterated through to perform the related task, in this case however the string is extremely 
+complicated and would be very difficult to translate to generating the structure in OpenGL. 
+The paper uses turtle graphics for it's representation, which removes the issues of cumulative 
+rotations at following bifurcations due to the turtle having a ``heading'' that can be easily 
+added to or subtracted from. Whereas, with OpenGL the rotations cannot be simply additive when 
+traversing the string due to parent branch rotations possibly not cooinciding directly with their 
+child branches.
 
+I have therefore decided to use an object called Apex (taken from how Prusinkiewicz et al. refer 
+to the branch segments in the paper) to represent the branch segments with appropriate attributes 
+that can be referenced such as rotations. Another benefit from using objects is that I can use 
+parent child relationships between Apex objects to edity child attributes with relation to the 
+parent Apex.
 
 \section*{Week 9 Sem 2, 26th Apr - 2nd May}
+Over the Easter break I have made good progress in creating Apex objects for tree constuction.
+I have been using examples from the Prusinkiewicz paper for reference and decided to try and 
+create their version of the simple binary tree first. 
 
+This proved relatively simple due to the even rotations and linear length degredation and I was 
+able to get a result equivalent to that shown in the paper. Rotations have been the largest blocker 
+when dealing with bugs due to visualising the problem being quite hard and issues not always being 
+completely obvious.
+
+For the latter half of the Easter break my focus then shifted to producing the other examples from 
+the paper to prove that my structure generation was correct. It seems that trees only using alpha 
+rotations work fine but once the phi rotations are introduced the structure completely breaks down.
+I have been discussing various approaches with Stephen and at the moment progress has been slowed 
+significantly. Small improvements are being made throughout the program however, while trying to 
+diagnose the rotation issue I have identified various other issues that have now been fixed.
 
 \section*{Week 10 Sem 2, 3rd May - 9th May}
+This week I have continued to try and fix the phi rotation issue with various methods. As with 
+last weeks summary there hasn't been an improvement in the phi rotations but other issues have 
+been fixed and I have added some usability changes such as being able to choose the posistion of 
+the tree in world space, and a better camera for viewing the trees that will be useful for 
+demonstrating the project results.
 
+The phi rotation issue has now been fixed after switching to a matrix rotation method the issue 
+was revealed to be that the rotations meant to be about the y axis were not acting as expected. 
+Now all examples from the paper have been successfully benchmarked and some acceptable tree 
+branch structures can be produced using the system.
+
+With recommendation from Stephen I have decided to end development and move onto writing the 
+project report at this time. Unfortunately I was unable to add thickness and leaves to the 
+trees, however I have laid the groundwork for branch thickness to be implemented and I know 
+a likely method for how I would add leaves so I will discuss this in the evaluation section of 
+the report.
 
 \section*{Week 11 Sem 2, 10th May - 16th May}
-
+This week I have been working on the report and am currently on schedule to finish the required 
+content on time for wednesday the 19th.
 
 \section*{Week 11 Sem 2, 17th May - 19th May, Deadline}
 
