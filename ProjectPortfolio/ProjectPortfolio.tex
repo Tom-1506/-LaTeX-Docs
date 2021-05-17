@@ -748,7 +748,70 @@ is that the OpenGL system does not take into account width of branches. This, an
 be explained in the next section.
 
 \subsection{Discussion of Issues}
+There are some features, researched and discussed as part of the literature review, that have not 
+been included in the system due to time constraints. This is because of an unseen issue with $y$ 
+rotations that blocked progress for a significant amount of time.
 
+The first feature not included that was planned is adding thickness to branches. The framework for 
+adding thickness has been designed into the existing system but not implemented. This would have 
+been an extension of the lines used for tree construction using cylinders, inspired by the branch 
+implementation of \cite{weber1995rendering}. This would require additions to the 
+\emph{constructGeometry()} function of the cylinder class. Currently the function produces 
+three points, one at the top of the line and two at the bottom. 
+
+A cylinder implementation would 
+take the top and bottom points of the line and use them as a centre point for a circle. Using the 
+top and bottom radii variables as an offset from their respective centres, multiple points would 
+be generated around the radius of the points to create the top and bottom pseudo-circular faces. 
+A number of segments would need to be chosen to give the desired smoothness, this could be factored 
+into the L-system input to give more control to the user. Figure \ref{fig:ex-cylinder} shows the 
+proposed geometry.
+
+Another issue not addressed by the project is that of texturing the tree branches. This would require 
+further research into how to apply textures to proprietary geometry. Setting texture indices would be 
+included as part of the \emph{createGeometry()} function. Texturing may require more advanced geometry 
+including vertical segmentation of the cylinders to allow the use of square textures without stretching.
+
+\begin{figure}[ht]
+    \includegraphics[scale=0.4]{ex-cylinder.PNG} 
+    \centering
+    \captionsetup{justification=centering}
+    \caption{Example of the proposed cylinder generation method with six and ten segments.}
+    \label{fig:ex-cylinder}
+\end{figure}
+
+Leaf placement was also researched and discussed as part of this project, but was also dropped 
+due to time constraints. The method that would be used for leaf placement would use a combination of 
+approaches proposed by \cite{weber1995rendering} and \cite{bloomenthal1985modeling}. The \emph{level} 
+attribute of an Apex object, which tracks how far from the root an Apex is, would be used to decide 
+which branches to place leaves on. The furthest levels of the tree would be populated with leaves to 
+emulate how real trees have more leaves on external branches further from the root. A choice of what 
+level to start placing leaves at could be included in the L-system inputs to allow users to control 
+the density of leaves. 
+
+The specific method of leaf placement would be more complicated. Again following the approaches of 
+Bloomenthal and Weber et al., leaves would be rendered as prefabs with a chosen texture. The difficulty 
+here would come from producing a method to place the leaf models on the surface of the branch correctly.
+A possible method for choosing placement on a branch would be to choose points on the surface of a 
+cylinder, such as some of the vertical segment vertices, and to render the leaf with its base at the 
+chosen point. The leaf would then need to be rotated to face upwards and make sure that the leaf 
+is rotated so it does not clip with the branch it is on.
+
+Another issue not remedied in this system is the problem of branches overlapping. This would be solved 
+as part of the cylinder generation process. Each cylinder would have to be checked by calculating 
+the local space taken up by the cylinder. Using the top and bottom termination points along with the 
+assigned widths of the cylinder you would then have to check if any other cylinders local space 
+overlaps with the local space of the current cylinder. If an overlap is found then pruning needs to 
+be done to remove one of the overlapping branches. The branch that will be pruned will be chosen 
+based on its \emph{level}, the higher level branch will be pruned because it will be further from 
+the root and will likely have less child branches that also need to be pruned. The pruned branch 
+and all of its children must then be removed from the cylinder vector so that they will not be 
+loaded. The parent of the pruned branch must then have its top width reduced to 0 so that it 
+properly terminates and does not leave a flat termination point.
+
+The system should also make better utilization of hardware to increase performance. Currently when 
+trying to load multiple trees at once there is a noticeable slow down in the program. This slow down 
+will not be adequate for creating more complicated environments with many more trees.
 
 \section{Conclusion}
 
