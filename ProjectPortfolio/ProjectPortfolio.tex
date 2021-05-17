@@ -843,11 +843,13 @@ even when compared to the results of modern systems.
 \bibliography{bibfile}
 
 %Appendix
+\pagebreak
+\section{Appendix}
 \appendix{}
 \begin{figure}[ht]
-    \section{Parameterised L-system Trees}
+    \subsection{Parameterised L-system Trees}
     \label{app:parameterised-lsystem-trees}
-    \includegraphics[scale=0.7]{tree-lsystem-results.PNG} 
+    \includegraphics[scale=0.6]{tree-lsystem-results.PNG} 
     \centering
     \captionsetup{justification=centering}
     \caption{Tree structures produced using the proposed L-system described by \cite{prusinkiewicz1996systems}}
@@ -855,7 +857,7 @@ even when compared to the results of modern systems.
 \end{figure}
 
 \begin{figure}[ht]
-    \section{L-system Input Table}
+    \subsection{L-system Input Table}
     \label{app:input-table}
     \begin{tabular}{||c c c c c c c c c||} 
         \hline
@@ -887,7 +889,7 @@ even when compared to the results of modern systems.
 \end{figure}
 
 \begin{figure}[ht]
-    \section{Binary Tree L-system Algorithm}
+    \subsection{Binary Tree L-system Algorithm}
     \label{app:b-tree-lsystem-algo}
     \begin{algorithm}[H]
     \caption{generateBinaryTree(\emph{axiom, numRecursions}) {\textbf{return}} \emph{branchList}}
@@ -928,7 +930,7 @@ even when compared to the results of modern systems.
 \end{figure}
 
 \begin{figure}[ht]
-    \section{Construct Apices Vector}
+    \subsection{Construct Apices Vector}
     \label{app:construct-tree}
     \begin{algorithm}[H]
     \caption{constructTree(\emph{root, apices, a1, a2, p1, p2, l1, l2, r1, r2, min, w1, w2, count}) {\textbf{return}} \emph{branchList}}
