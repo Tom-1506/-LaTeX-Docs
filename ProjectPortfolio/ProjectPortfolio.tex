@@ -450,13 +450,12 @@ Having constructed the apices vector the last step was to iterate through each A
 data to render a line. This is where most issues arose in development as multiple iterations were 
 used for applying rotations before a working solution was found.
 
-One main mistake in the development process was a misunderstanding of the implementation from 
-\cite{prusinkiewicz1996systems} due to their use of a proprietary coordinate system to be used 
-with turtle graphics. Rather than $x, y, z$ they used $u, h, l$ shown in Figure \ref{fig:uhl-coords} 
-which lead to a mistake believing that phi rotations should be applied about the $z$-axis 
-instead of the $y$-axis. Unfortunately this issue was not immediately apparent and lead to many 
-different attempts to remedy the problem until this mistake was realised. The examples of each 
-rotation method discussed below will assume the rotation about the $y$-axis.
+\cite{prusinkiewicz1996systems} used a proprietary coordinate system to describe their transformations 
+when using turtle graphics and those axes are shown in Figure \ref{fig:uhl-coords}. For reference 
+the axes $u, h, l$ correspond to $x, y, z$ respectively. 
+
+The rotations discussed below only display rotations about the $x$ and $y$ axes because these 
+are the only two rotations involved in this L-system.
 
 \begin{figure}[ht]
     \includegraphics[scale=0.4]{uhl-coords.PNG} 
@@ -466,6 +465,7 @@ rotation method discussed below will assume the rotation about the $y$-axis.
     \label{fig:uhl-coords}
 \end{figure}
 
+\pagebreak
 Initially, rotations were applied by calculating the rotation of each element of the coordinate,
 
 For the $x$-axis:
@@ -494,9 +494,9 @@ $y = length\sin(rotationPhi)\sin(rotationAlpha)$
 $z = length\cos(rotationAlpha)$
 
 The final method that proved successful was the use of rotation matrices as part of the Apex 
-objects with the glm::rotate function. When the parent of a child Apex is set in the apices vector construction process, the 
-rotation matrix of the child is calculated using the rotation matrix of the parent so that 
-the angle of the parent branch is taken into account. 
+objects with the glm::rotate function. When the parent of a child Apex is set in the apices vector 
+construction process, the rotation matrix of the child is calculated using the rotation matrix 
+of the parent so that the angle of the parent branch is taken into account. 
 
 The code below is a simplification of glm::rotate and assumes local variables of an 
 Apex object, rotation values are converted to radians for use with glm::rotate and the last 
@@ -505,11 +505,11 @@ a glm::vec3 with a 1 in the parameter corresponding to the chosen axis.
 
 Alpha rotation:
 
-$rotationMatrix = rotate(parentRotationMatrix, rotationAlpha, x$
+$rotationMatrix = rotate(parentRotationMatrix, rotationAlpha, x)$
 
 Phi rotation:
 
-$rotationMatrix = rotate(rotationMatrixAlpha, rotationPhi, y$
+$rotationMatrix = rotate(rotationMatrixAlpha, rotationPhi, y)$
 
 The rotation Matrix of an Apex object can then be used to rotate a point for creating a line 
 segment along with the other Apex attributes. The algorithm below displays how the apices 
@@ -540,7 +540,25 @@ vector is used to create lines ready to be rendered into a scene.
     \label{fig:construct-lines}
 \end{figure}
 
+The code pipeline has also been designed so that if new L-systems were needed then they could 
+be implemented as part of a new \emph{L-system} object. This was done to allow for future 
+adopters of the module to expand the source code to meet their requirements.
 
+\section{Analysis of Results}
+I this section, three different trees will be analysed for their performance and then analysed 
+when all three trees are loaded at once. These trees are results from the method desribed in 
+the previous section, and are examples taken from \cite{prusinkiewicz1996systems} to allow 
+benchmarking in the evaluation section.
+
+The first tree shown in Figure \ref{fig:tree-g} has a wide crown with a relatively even spread of branches
+
+\begin{figure}[ht]
+    \includegraphics[scale=0.7]{tree-g.PNG} 
+    \centering
+    \captionsetup{justification=centering}
+    \caption{Wide Crown Tree}
+    \label{fig:tree-g}
+\end{figure}
 
 %Bibliography
 \pagebreak
