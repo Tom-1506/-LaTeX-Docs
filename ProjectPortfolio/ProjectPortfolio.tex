@@ -794,8 +794,17 @@ Bloomenthal and Weber et al., leaves would be rendered as prefabs with a chosen 
 here would come from producing a method to place the leaf models on the surface of the branch correctly.
 A possible method for choosing placement on a branch would be to choose points on the surface of a 
 cylinder, such as some of the vertical segment vertices, and to render the leaf with its base at the 
-chosen point. The leaf would then need to be rotated to face upwards and make sure that the leaf 
-is rotated so it does not clip with the branch it is on.
+chosen point. This method has been displayed in Figure \ref{fig:leaf-placement}. The leaf would then 
+need to be rotated to face upwards and make sure that the leaf is rotated so it does not clip with the 
+branch it is on.
+
+\begin{figure}[ht]
+    \includegraphics[scale=0.4]{leaf-placement.PNG} 
+    \centering
+    \captionsetup{justification=centering}
+    \caption{Visualized example of how leaves would be placed on vertices of branch cylinders.}
+    \label{fig:leaf-placement}
+\end{figure}
 
 Another issue not remedied in this system is the problem of branches overlapping. This would be solved 
 as part of the cylinder generation process. Each cylinder would have to be checked by calculating 
