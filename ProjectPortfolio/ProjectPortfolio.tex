@@ -633,7 +633,121 @@ This scene fluctuates CPU utilization between 6\% and 9\% for the first 5 second
 approximately before steadying at 6\%. For the first few seconds this scene has some frame 
 slowdowns and loads slower than the previous examples.
 
-\section{Discussion and Evaluation}
+\section{Evaluation and Discussion}
+In the first part of this section, benchmarking against the results of \cite{prusinkiewicz1996systems} 
+has been carried out to display the accuracy of adaptation for the parametric L-system. Following 
+this will be a discussion about the issues of the project and how they would be remedied. 
+
+\subsection{Benchmarking}
+This section will list multiple figures showing a comparison between the results of \cite{prusinkiewicz1996systems} 
+shown in section \ref{app:parameterised-lsystem-trees}, and results obtained from using the 
+same input with the adapted L-system in OpenGL.
+
+The inputs used for each tree can be seen in section \ref{app:input-table}.
+
+\begin{figure}[ht]
+    \includegraphics[scale=0.4]{tree-comp-a.png} 
+    \centering
+    \captionsetup{justification=centering}
+    \caption{Tree A Comparison: OpenGL (left), Prusinkiewicz et al. (right)}
+    \label{fig:tree-comp-a}
+\end{figure}
+
+Similarly to the intial testing of string based L-systems, the binary trees from \ref{fig:tree-comp-a}  
+are the most basic trees produced for testing branch bifurcation and $x$ rotations.
+
+\begin{figure}[ht]
+    \includegraphics[scale=0.4]{tree-comp-b.png} 
+    \centering
+    \captionsetup{justification=centering}
+    \caption{Tree B Comparison: OpenGL (left), Prusinkiewicz et al. (right)}
+    \label{fig:tree-comp-b}
+\end{figure}
+
+A classical use of L-system productions to create a common fractal. 
+
+\begin{figure}[ht]
+    \includegraphics[scale=0.4]{tree-comp-c.png} 
+    \centering
+    \captionsetup{justification=centering}
+    \caption{Tree C Comparison: OpenGL (left), Prusinkiewicz et al. (right)}
+    \label{fig:tree-comp-c}
+\end{figure}
+
+\pagebreak
+Figure \ref{fig:tree-comp-c} shows the most simple tree to include a $y$ rotation of 180 degrees to flip 
+bifurcations, producing a fan like pattern.
+
+\begin{figure}[ht]
+    \includegraphics[scale=0.4]{tree-comp-d.png} 
+    \centering
+    \captionsetup{justification=centering}
+    \caption{Tree D Comparison: OpenGL (left), Prusinkiewicz et al. (right)}
+    \label{fig:tree-comp-d}
+\end{figure}
+
+Tree D was the most simple tree to start including more believably natural structures with nicely 
+sweeping branches that shorten into small twigs.
+
+\begin{figure}[ht]
+    \includegraphics[scale=0.4]{tree-comp-e.png} 
+    \centering
+    \captionsetup{justification=centering}
+    \caption{Tree E Comparison: OpenGL (left), Prusinkiewicz et al. (right)}
+    \label{fig:tree-comp-e}
+\end{figure}
+
+\pagebreak
+Tree E shows the fractal capabilities of the L-system once again while also including some of the 
+natural structuring seen in Tree D.
+
+\begin{figure}[ht]
+    \includegraphics[scale=0.37]{tree-comp-f.png} 
+    \centering
+    \captionsetup{justification=centering}
+    \caption{Tree F Comparison: OpenGL (left), Prusinkiewicz et al. (right)}
+    \label{fig:tree-comp-f}
+\end{figure}
+
+Tree F is very different from the other trees presented and is another display of fractal 
+construction like Tree B.
+
+\pagebreak
+Tree G, H and I are the trees that make use of $y$ rotations to create a 3D structure that looks 
+as close to a natural structure as is possible with this system. 
+
+\begin{figure}[ht]
+    \includegraphics[scale=0.4]{tree-comp-g.png} 
+    \centering
+    \captionsetup{justification=centering}
+    \caption{Tree G Comparison: OpenGL (left), Prusinkiewicz et al. (right)}
+    \label{fig:tree-comp-g}
+\end{figure}
+
+\begin{figure}[ht]
+    \includegraphics[scale=0.4]{tree-comp-h.png} 
+    \centering
+    \captionsetup{justification=centering}
+    \caption{Tree H Comparison: OpenGL (left), Prusinkiewicz et al. (right)}
+    \label{fig:tree-comp-h}
+\end{figure}
+
+\begin{figure}[ht]
+    \includegraphics[scale=0.4]{tree-comp-i.png} 
+    \centering
+    \captionsetup{justification=centering}
+    \caption{Tree I Comparison: OpenGL (left), Prusinkiewicz et al. (right)}
+    \label{fig:tree-comp-i}
+\end{figure}
+
+These trees show the full potential of the system and the structures it can produce. Overall the 
+benchmarks against the results of \cite{prusinkiewicz1996systems}, have been successful in 
+reproducing the presented examples. However, due to some issues with development of this project, 
+some features are absent from the final system. Most apparent of these when looking at the benchmarks 
+is that the OpenGL system does not take into account width of branches. This, and other problems, will 
+be explained in the next section.
+
+\subsection{Discussion of Issues}
 
 
 \section{Conclusion}
@@ -653,6 +767,38 @@ slowdowns and loads slower than the previous examples.
     \captionsetup{justification=centering}
     \caption{Tree structures produced using the proposed L-system described by \cite{prusinkiewicz1996systems}}
     \label{fig:tree-lsystem-results}
+\end{figure}
+
+\begin{figure}[ht]
+    \section{L-system Input Table}
+    \label{app:input-table}
+    \begin{tabular}{||c c c c c c c c c||} 
+        \hline
+        \textbf{Tree} & \emph{min} & $a_1$ & $a_2$ & $p_1$ & $p_2$ & $r_1$ & $r_2$ & \emph{count}\\ [0.5ex] 
+        \hline
+        \textbf{a} & 0.0 & 35 & -35 & 0 & 0 & 0.75 & 0.77 & 10 \\ 
+        \hline
+        \textbf{b} & 0.017 & 27 & -68 & 0 & 0 & 0.65 & 0.71 & 12 \\ 
+        \hline
+        \textbf{c} & 0.005 & 25 & -15 & 180 & 0 & 0.50 & 0.85 & 9 \\ 
+        \hline
+        \textbf{d} & 0.0 & 25 & -15 & 180 & 180 & 0.60 & 0.85 & 10 \\ 
+        \hline
+        \textbf{e} & 0.001 & 30 & 15 & 0 & 180 & 0.58 & 0.83 & 11 \\ 
+        \hline
+        \textbf{f} & 0.005 & 0 & 60 & 180 & 0 & 0.92 & 0.37 & 15 \\ 
+        \hline
+        \textbf{g} & 0.0 & 30 & -30 & 137 & 137 & 0.80 & 0.80 & 10 \\ 
+        \hline
+        \textbf{h} & 0.25 & 5 & -30 & -90 & 90 & 0.95 & 0.75 & 12 \\ 
+        \hline
+        \textbf{i} & 0.05 & -5 & 30 & 137 & 137 & 0.55 & 0.95 & 12 \\ [0.5ex]
+        \hline
+    \end{tabular}
+    \centering
+    \captionsetup{justification=centering}
+    \caption{Table of inputs that will produce the example trees shown in the benchmarking section. 
+             The \emph{min} input assumes a \emph{startBranchLength} of 1.0.}
 \end{figure}
 
 \begin{figure}[ht]
