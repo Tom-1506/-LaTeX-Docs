@@ -82,7 +82,7 @@ methods for creating a branching structure. This was done by starting with a par
 branch which then bifurcates into two child branches and rotating them by given 
 angles about the termination point of the parent branch, an example of which 
 can be seen in Figure \ref{fig:honda-bifurcation}. By continuing this 
-method he treated each child branch as another parent and bifuracted them to 
+method he treated each child branch as another parent and bifurcated them to 
 expand the branching structure which would be continued until a desired result is 
 reached.
 
@@ -106,7 +106,7 @@ For the construction of the branches and trunk he uses splines to create a tree 
 the use of splines rather than straight lines is chosen to produce a more natural structure. 
 He then uses generalised cylinders with varying radii across the splines to create thickness. 
 He also describes the use of ramiforms, shown in Figure \ref{fig:bloomenthal-ramiform}, to 
-make branch bifurcations realisticly curve rather than have an acute separation.
+make branch bifurcations realistically curve rather than have an acute separation.
 
 \begin{figure}[ht]
     \includegraphics[scale=0.35]{bloomenthal-ramiform.PNG}
@@ -210,7 +210,7 @@ which they credit similarity to the aims of \cite{reeves1985approximate}.
 They admit that their model resembles that proposed by \cite{oppenheimer1986real} which used 
 fractals with parameters such as ``branching angle'' and ``helical twist'' to produce trees. 
 However, Weber et al. propose that the use of fractal theory self similarity by Oppenheimer 
-is not necessesary and restricts results to only a small number of basic trees.
+is not necessary and restricts results to only a small number of basic trees.
 
 Weber et al. used cylinders and cones as branch segments, 
 each child branches base circle coinciding with the top circle of the parent branch. 
@@ -247,7 +247,7 @@ avoiding obstacles \citep{weber2008simulation}.
 Another branch structure method, that differs uniquely from methods mentioned above, is that of 
 space colonisation \citep{runions2007colonization}. The steps of this method can be seen in Figure \ref{fig:space-colonisation} 
 and works by producing a three-dimensional envelope to be used for the tree crown containing a set 
-of ``attraction points'' which are used as targets for branch growth. The tree skeleton interatively 
+of ``attraction points'' which are used as targets for branch growth. The tree skeleton interactively 
 expands by producing new branches in the direction of the attraction points. Once an attraction point 
 is reached by a branch, the point is removed and the branch terminates. This process is continued 
 until all attraction points are reached, when no new branches are within attraction radius of 
@@ -262,7 +262,7 @@ remaining points or when a user inputted number of iterations has been reached.
 \end{figure}
 
 Once a tree skeleton has been finalised they determine the width of the limbs using the pipe 
-model \citep{shinozaki1964quantitative} and the tree geometry is modeled using generalised 
+model \citep{shinozaki1964quantitative} and the tree geometry is modelled using generalised 
 cylinders \citep{bloomenthal1985modeling}.
 
 A leaf placement method is not provided as part of this paper due to it focusing solely on 
@@ -302,14 +302,14 @@ Because of this the decision was made to instead create a cylinder class specifi
 purpose, therefore allowing better control of generating the models and allowing for tweaks to 
 made when integrating them with the L-system. 
 
-The cylinder class was intially designed to produce a line rather than an entire cylinder so that 
+The cylinder class was initially designed to produce a line rather than an entire cylinder so that 
 testing could be carried out more quickly and tree skeletons would be easier to analyse for 
 mistakes in the L-system. Unfortunately the cylinder class did not advance further than using 
 lines for the construction but this will be explained in the Evaluation. 
 
 These cylinder objects are constructed using vertex array objects and vertex buffer objects with 
 the aim of being able to store the geometry data of a constructed tree as a vector of these 
-objects and then simply interate through and load each cylinder object. The cylinder object is 
+objects and then simply iterate through and load each cylinder object. The cylinder object is 
 constructed using a glm::vec3 for the base and top centre point of the cylinder, and has a top 
 and bottom radius that would be used to control tapering. 
 
@@ -440,10 +440,10 @@ Alterations of these variables can be used to produce vastly different outcomes 
 results of \cite{prusinkiewicz1996systems}, which are included in section \ref{app:parameterised-lsystem-trees}.
 
 To construct the apices vector, these variables are passed through to a recursive function that 
-creates each Apex object, sets parent and child relationships, and handles length degredation.
+creates each Apex object, sets parent and child relationships, and handles length degradation.
 This function used to construct the apices vector is shown in section \ref{app:construct-tree}. 
 The initial implementation for constructing the apices vector used a simple loop, this made 
-setting parent-child relationships unecessarilly obtuse however. Therefore the recursive method 
+setting parent-child relationships unnecessarily obtuse however. Therefore the recursive method 
 was developed to streamline the construction process and also improve readability of the code.
 
 Having constructed the apices vector the last step was to iterate through each Apex and use their 
@@ -546,7 +546,7 @@ adopters of the module to expand the source code to meet their requirements.
 
 \section{Analysis of Results}
 I this section, three different trees will be analysed for their performance and then analysed 
-when all three trees are loaded at once. These trees are results from the method desribed in 
+when all three trees are loaded at once. These trees are results from the method described in 
 the previous section, and are examples taken from \cite{prusinkiewicz1996systems} to allow 
 benchmarking in the evaluation section.
 
@@ -572,7 +572,7 @@ does not cause a reduction in frames per second.
 
 \subsection{Medium Tree}
 The next tree, shown in Figure \ref{fig:tree-h}, is a medium sized tree with some main spreading 
-branches but has a lower length degredation than the short tree causing it to grow taller. This 
+branches but has a lower length degradation than the short tree causing it to grow taller. This 
 structure could be used to represent a maple tree.
 
 \begin{figure}[ht]
@@ -612,7 +612,7 @@ hence the memory usage being between that of the previous examples.
 \pagebreak
 \subsection{Multiple Trees}
 The final test was to take multiple tree models and load them into the same scene. This is 
-important to test as an evironment containing trees is likely to contain more than one, such as 
+important to test as an environment containing trees is likely to contain more than one, such as 
 a forest. Figure \ref{fig:trees-ghi} shows a scene with all three of the previously analysed 
 trees loaded in at once. 
 
@@ -626,7 +626,7 @@ trees loaded in at once.
 
 This scene requires more resources to load than a singular tree with a memory usage of 89MB. 
 Worth noting is that with the 89MB measurement, subtracting the base 43MB gives us a usage of 
-46MB which does not cooincide with an addition of each trees separate memory usage.
+46MB which does not coincide with an addition of each trees separate memory usage.
 This is likely due to every tree being stored in a single vector.
 
 This scene fluctuates CPU utilization between 6\% and 9\% for the first 5 seconds 
@@ -653,7 +653,7 @@ The inputs used for each tree can be seen in section \ref{app:input-table}.
     \label{fig:tree-comp-a}
 \end{figure}
 
-Similarly to the intial testing of string based L-systems, the binary trees from \ref{fig:tree-comp-a}  
+Similarly to the initial testing of string based L-systems, the binary trees from \ref{fig:tree-comp-a}  
 are the most basic trees produced for testing branch bifurcation and $x$ rotations.
 
 \begin{figure}[ht]
@@ -823,7 +823,7 @@ trying to load multiple trees at once there is a noticeable slow down in the pro
 will not be adequate for creating more complicated environments with many more trees.
 
 The system can also be easily augmented to include a slight randomisation in angle from branch to branch.
-This would remove the deterministic nature of the L-system, but would creat different looking trees 
+This would remove the deterministic nature of the L-system, but would create different looking trees 
 every time. This would be advantageous with the creation of scenes with multiple trees, because each tree will 
 look unique and give a more natural look to the environment.
 
