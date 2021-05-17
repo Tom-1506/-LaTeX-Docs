@@ -91,7 +91,7 @@ reached.
     \centering
     \captionsetup{justification=centering}
     \caption{Example diagram of parent branch $P_AP_B$ bifurcating into child branches
-    $P_BP_1$ with a rotation of $\theta_1$ and $P_BP_2$ with a rotation of \textminus$\theta_2$}
+    $P_BP_1$ with a rotation of $\theta_1$ and $P_BP_2$ with a rotation of \textminus$\theta_2$.}
     \label{fig:honda-bifurcation}
 \end{figure}
 
@@ -112,7 +112,7 @@ make branch bifurcations realisticly curve rather than have an acute separation.
     \includegraphics[scale=0.35]{bloomenthal-ramiform.PNG}
     \centering
     \captionsetup{justification=centering}
-    \caption{A ramiform used to create a realistic bifurcation}
+    \caption{A ramiform used to create a realistic bifurcation.}
     \label{fig:bloomenthal-ramiform}
 \end{figure}
 
@@ -128,7 +128,7 @@ a more realistic result than the use of simple primitives \citep{kawaguchi1982mo
     \includegraphics[scale=0.24]{bloomenthal-leaves.PNG} 
     \centering
     \captionsetup{justification=centering}
-    \caption{A leaf ``configuration'': plan view (top) and perspective view (bottom)}
+    \caption{A leaf ``configuration'': plan view (top) and perspective view (bottom).}
     \label{fig:bloomenthal-leaves}
 \end{figure}
 
@@ -166,7 +166,7 @@ triangular appendage. The Production $p_1$ can be visualised as so:
         \includegraphics[scale=0.4]{triangle_snowflake_lsystem.PNG}
         \centering
         \caption{The visualised production rule $p_1$, axiom and first 3 recursions 
-        defined by the snowflake D0L-system from \citep{prusinkiewicz1996systems} pg.12}
+        defined by the snowflake D0L-system from \citep{prusinkiewicz1996systems} pg.12.}
         \label{fig:snowflake-lsystem}
 \end{figure}
 
@@ -229,7 +229,7 @@ branches.
     \includegraphics[scale=0.5]{weber-splits.PNG} 
     \centering
     \captionsetup{justification=centering}
-    \caption{Example of tree parameters}
+    \caption{Example of tree parameters.}
     \label{fig:weber-splits}
 \end{figure}
 
@@ -257,7 +257,7 @@ remaining points or when a user inputted number of iterations has been reached.
     \includegraphics[scale=0.5]{space-colonisation.PNG} 
     \centering
     \captionsetup{justification=centering}
-    \caption{Space colonisation steps}
+    \caption{Space colonisation steps.}
     \label{fig:space-colonisation}
 \end{figure}
 
@@ -286,7 +286,7 @@ an early test bifurcation using quadric cylinders.
     \includegraphics[scale=0.5]{quadric-cylinders.png} 
     \centering
     \captionsetup{justification=centering}
-    \caption{3 quadric cylinders positioned as a bifurcation}
+    \caption{3 quadric cylinders positioned as a bifurcation.}
     \label{fig:quadric-cylinders}
 \end{figure}
 
@@ -367,7 +367,7 @@ This proves that this method of line segments can be used for this projects aim.
     \centering
     \captionsetup{justification=centering}
     \caption{Binary Tree L-system result after six recursions (left) and Barnsley Fern L-system
-             after five recursions (right)}
+             after five recursions (right).}
     \label{fig:b-tree-fern-string}
 \end{figure}
 
@@ -461,7 +461,7 @@ are the only two rotations involved in this L-system.
     \includegraphics[scale=0.4]{uhl-coords.PNG} 
     \centering
     \captionsetup{justification=centering}
-    \caption{Axes used to control the turtle in three dimensions}
+    \caption{Axes used to control the turtle in three dimensions.}
     \label{fig:uhl-coords}
 \end{figure}
 
@@ -536,7 +536,7 @@ vector is used to create lines ready to be rendered into a scene.
         \State \Return \emph{lines}
         \end{algorithmic}
     \end{algorithm}
-    \caption{Construction of line segments ready for rendering}
+    \caption{Construction of line segments ready for rendering.}
     \label{fig:construct-lines}
 \end{figure}
 
@@ -550,15 +550,94 @@ when all three trees are loaded at once. These trees are results from the method
 the previous section, and are examples taken from \cite{prusinkiewicz1996systems} to allow 
 benchmarking in the evaluation section.
 
-The first tree shown in Figure \ref{fig:tree-g} has a wide crown with a relatively even spread of branches
+\subsection{Short Tree}
+The first tree, shown in Figure \ref{fig:tree-g}, has a short, wide crown with an even spread of branches.
+Alterations to this structure would produce results close to that of an ash tree. 
 
 \begin{figure}[ht]
     \includegraphics[scale=0.7]{tree-g.PNG} 
     \centering
     \captionsetup{justification=centering}
-    \caption{Wide Crown Tree}
+    \caption{Short Tree.}
     \label{fig:tree-g}
 \end{figure}
+
+The performance of this tree and others was measured using the built in diagnostics tools in 
+the visual studio editor. An empty scene has been measured at a memory usage of 43MB so the 
+results included are the total usage with the base 43MB subtracted. 
+
+The short tree has a consistent memory usage of 65.4MB, and subtracting the base usage of 43MB gives 
+us a usage of 22.4MB. CPU utilization fluctuates between 6\% and 9\%, and when rotated the tree 
+does not cause a reduction in frames per second.
+
+\subsection{Medium Tree}
+The next tree, shown in Figure \ref{fig:tree-h}, is a medium sized tree with some main spreading 
+branches but has a lower length degredation than the short tree causing it to grow taller. This 
+structure could be used to represent a maple tree.
+
+\begin{figure}[ht]
+    \includegraphics[scale=0.7]{tree-h.PNG} 
+    \centering
+    \captionsetup{justification=centering}
+    \caption{Medium Tree.}
+    \label{fig:tree-h}
+\end{figure}
+
+The medium tree has a memory usage of 56.9MB, real usage 13.9MB. Fluctuates between 6\% and 
+9\% CPU utilization, and when rotated does not cause a reduction in frames per second.
+
+This tree has a higher minimum branch length than the short tree, meaning that less branch 
+segments are generated, which is why the memory usage is lower.
+
+\pagebreak
+\subsection{Tall Tree}
+The third tree, shown in Figure \ref{fig:tree-i}, is a tall tree with less widely spreading 
+branches that have shorter child segments making the tree stand tall and compact with minimal 
+overhang from the trunk. The structure below would be well suited for creating a birch tree.
+
+\begin{figure}[ht]
+    \includegraphics[scale=0.7]{tree-i.PNG} 
+    \centering
+    \captionsetup{justification=centering}
+    \caption{Tall Tree.}
+    \label{fig:tree-i}
+\end{figure}
+
+The tall tree has a memory usage of 63.6MB, real usage 20.6MB. Fluctuates between 6\% and 9\% 
+CPU utilization, and when rotated does not cause a reduction in frames per second.
+
+This tree has a minimum branch length greater than the short tree but less than the medium tree,
+hence the memory usage being between that of the previous examples.
+
+\pagebreak
+\subsection{Multiple Trees}
+The final test was to take multiple tree models and load them into the same scene. This is 
+important to test as an evironment containing trees is likely to contain more than one, such as 
+a forest. Figure \ref{fig:trees-ghi} shows a scene with all three of the previously analysed 
+trees loaded in at once. 
+
+\begin{figure}[ht]
+    \includegraphics[scale=0.7]{trees-ghi.PNG} 
+    \centering
+    \captionsetup{justification=centering}
+    \caption{Medium (left), Tall (centre) and Short (right) trees.}
+    \label{fig:trees-ghi}
+\end{figure}
+
+This scene requires more resources to load than a singular tree with a memory usage of 89MB. 
+Worth noting is that with the 89MB measurement, subtracting the base 43MB gives us a usage of 
+46MB which does not cooincide with an addition of each trees separate memory usage.
+This is likely due to every tree being stored in a single vector.
+
+This scene fluctuates CPU utilization between 6\% and 9\% for the first 5 seconds 
+approximately before steadying at 6\%. For the first few seconds this scene has some frame 
+slowdowns and loads slower than the previous examples.
+
+\section{Discussion and Evaluation}
+
+
+\section{Conclusion}
+
 
 %Bibliography
 \pagebreak
