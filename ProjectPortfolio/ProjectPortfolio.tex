@@ -545,10 +545,14 @@ be implemented as part of a new \emph{L-system} object. This was done to allow f
 adopters of the module to expand the source code to meet their requirements.
 
 \section{Analysis of Results}
-I this section, three different trees will be analysed for their performance and then analysed 
+In this section, three different trees will be analysed for their performance and then analysed 
 when all three trees are loaded at once. These trees are results from the method described in 
 the previous section, and are examples taken from \cite{prusinkiewicz1996systems} to allow 
 benchmarking in the evaluation section.
+
+The performance of this tree and others was measured using the built in diagnostics tools in 
+the visual studio editor. Total memory usage for each tree will be presented, note that memory 
+usage for the scene with no tree loaded is 43MB.
 
 \subsection{Short Tree}
 The first tree, shown in Figure \ref{fig:tree-g}, has a short, wide crown with an even spread of branches.
@@ -558,17 +562,13 @@ Alterations to this structure would produce results close to that of an ash tree
     \includegraphics[scale=0.7]{tree-g.PNG} 
     \centering
     \captionsetup{justification=centering}
-    \caption{Short Tree.}
+    \caption{Short Tree generated using data set G from section \ref{app:input-table}.}
     \label{fig:tree-g}
 \end{figure}
 
-The performance of this tree and others was measured using the built in diagnostics tools in 
-the visual studio editor. An empty scene has been measured at a memory usage of 43MB so the 
-results included are the total usage with the base 43MB subtracted. 
-
-The short tree has a consistent memory usage of 65.4MB, and subtracting the base usage of 43MB gives 
-us a usage of 22.4MB. CPU utilization fluctuates between 6\% and 9\%, and when rotated the tree 
-does not cause a reduction in frames per second.
+The short tree has a consistent memory usage of 65.4MB, CPU utilization fluctuates between 6\% and 9\%, 
+and when rotated the tree does not cause a reduction in frames per second. This tree takes an average of
+0.17 seconds to be constructed and an average of 0.0093 seconds to be rendered.
 
 \subsection{Medium Tree}
 The next tree, shown in Figure \ref{fig:tree-h}, is a medium sized tree with some main spreading 
@@ -579,12 +579,13 @@ structure could be used to represent a maple tree.
     \includegraphics[scale=0.7]{tree-h.PNG} 
     \centering
     \captionsetup{justification=centering}
-    \caption{Medium Tree.}
+    \caption{Medium Tree generated using data set H from section \ref{app:input-table}.}
     \label{fig:tree-h}
 \end{figure}
 
-The medium tree has a memory usage of 56.9MB, real usage 13.9MB. Fluctuates between 6\% and 
-9\% CPU utilization, and when rotated does not cause a reduction in frames per second.
+The medium tree has a memory usage of 56.9MB, fluctuates between 6\% and 
+9\% CPU utilization, and when rotated does not cause a reduction in frames per second. This tree 
+takes an average of 0.085 seconds to be constructed and an average of 0.0044 seconds to be rendered. 
 
 This tree has a higher minimum branch length than the short tree, meaning that less branch 
 segments are generated, which is why the memory usage is lower.
@@ -599,12 +600,13 @@ overhang from the trunk. The structure below would be well suited for creating a
     \includegraphics[scale=0.7]{tree-i.PNG} 
     \centering
     \captionsetup{justification=centering}
-    \caption{Tall Tree.}
+    \caption{Tall Tree generated using data set I from section \ref{app:input-table}.}
     \label{fig:tree-i}
 \end{figure}
 
-The tall tree has a memory usage of 63.6MB, real usage 20.6MB. Fluctuates between 6\% and 9\% 
-CPU utilization, and when rotated does not cause a reduction in frames per second.
+The tall tree has a memory usage of 63.6MB, fluctuates between 6\% and 9\% 
+CPU utilization, and when rotated does not cause a reduction in frames per second. This tree takes 
+an average of 0.14 seconds to be constructed and an average of 0.0073 seconds to be rendered.
 
 This tree has a minimum branch length greater than the short tree but less than the medium tree,
 hence the memory usage being between that of the previous examples.
@@ -631,7 +633,10 @@ This is likely due to every tree being stored in a single vector.
 
 This scene fluctuates CPU utilization between 6\% and 9\% for the first 5 seconds 
 approximately before steadying at 6\%. For the first few seconds this scene has some frame 
-slowdowns and loads slower than the previous examples.
+slowdowns and loads slower than the previous examples. This tree cluster takes 
+an average of 0.39 seconds to be constructed and an average of 0.025 seconds to be rendered. 
+These timings are in line with an addition of the timings for each individual tree, as would 
+be expected.
 
 \section{Evaluation and Discussion}
 In the first part of this section, benchmarking against the results of \cite{prusinkiewicz1996systems} 
@@ -657,7 +662,7 @@ Similarly to the initial testing of string based L-systems, the binary trees fro
 are the most basic trees produced for testing branch bifurcation and $x$ rotations.
 
 \begin{figure}[ht]
-    \includegraphics[scale=0.4]{tree-comp-b.png} 
+    \includegraphics[scale=0.35]{tree-comp-b.png} 
     \centering
     \captionsetup{justification=centering}
     \caption{Tree B Comparison: OpenGL (left), Prusinkiewicz et al. (right)}
@@ -674,7 +679,6 @@ A classical use of L-system productions to create a common fractal.
     \label{fig:tree-comp-c}
 \end{figure}
 
-\pagebreak
 Figure \ref{fig:tree-comp-c} shows the most simple tree to include a $y$ rotation of 180 degrees to flip 
 bifurcations, producing a fan like pattern.
 
@@ -732,6 +736,13 @@ as close to a natural structure as is possible with this system.
     \label{fig:tree-comp-h}
 \end{figure}
 
+These trees show the full potential of the system and the structures it can produce. Overall the 
+benchmarks against the results of \cite{prusinkiewicz1996systems}, have been successful in 
+reproducing the presented examples. However, due to some issues with development of this project, 
+some features are absent from the final system. Most apparent of these when looking at the benchmarks 
+is that the OpenGL system does not take into account width of branches. This, and other possible 
+avenues for future development, will be detailed in the next section. 
+
 \begin{figure}[ht]
     \includegraphics[scale=0.4]{tree-comp-i.png} 
     \centering
@@ -740,21 +751,13 @@ as close to a natural structure as is possible with this system.
     \label{fig:tree-comp-i}
 \end{figure}
 
-These trees show the full potential of the system and the structures it can produce. Overall the 
-benchmarks against the results of \cite{prusinkiewicz1996systems}, have been successful in 
-reproducing the presented examples. However, due to some issues with development of this project, 
-some features are absent from the final system. Most apparent of these when looking at the benchmarks 
-is that the OpenGL system does not take into account width of branches. This, and other problems, will 
-be explained in the next section.
-
-\subsection{Discussion of Issues}
+\subsection{Discussion of Future Development}
 There are some features, researched and discussed as part of the literature review, that have not 
-been included in the system due to time constraints. This is because of an unseen issue with $y$ 
-rotations that blocked progress for a significant amount of time.
+been included in the system. These features would be included in the system with future updates.
 
-The first feature not included that was planned is adding thickness to branches. The framework for 
-adding thickness has been designed into the existing system but not implemented. This would have 
-been an extension of the lines used for tree construction using cylinders, inspired by the branch 
+The first feature that would be added is adding thickness to branches. The framework for 
+adding thickness has been designed into the existing system but not yet implemented. This would 
+be an extension of the lines used for tree construction using cylinders, inspired by the branch 
 implementation of \cite{weber1995rendering}. This would require additions to the 
 \emph{constructGeometry()} function of the cylinder class. Currently the function produces 
 three points, one at the top of the line and two at the bottom. 
@@ -767,7 +770,7 @@ A number of segments would need to be chosen to give the desired smoothness, thi
 into the L-system input to give more control to the user. Figure \ref{fig:ex-cylinder} shows the 
 proposed geometry.
 
-Another issue not addressed by the project is that of texturing the tree branches. This would require 
+Another feature that could be added is that of texturing the tree branches. This would require 
 further research into how to apply textures to proprietary geometry. Setting texture indices would be 
 included as part of the \emph{createGeometry()} function. Texturing may require more advanced geometry 
 including vertical segmentation of the cylinders to allow the use of square textures without stretching.
@@ -776,12 +779,13 @@ including vertical segmentation of the cylinders to allow the use of square text
     \includegraphics[scale=0.4]{ex-cylinder.PNG} 
     \centering
     \captionsetup{justification=centering}
-    \caption{Example of the proposed cylinder generation method with six and ten segments.}
+    \caption{Example of the proposed cylinder generation method with six (left) and ten (right) vertical 
+             segmentations and two horizontal segmentations each.}
     \label{fig:ex-cylinder}
 \end{figure}
 
-Leaf placement was also researched and discussed as part of this project, but was also dropped 
-due to time constraints. The method that would be used for leaf placement would use a combination of 
+Leaf placement was also researched and discussed as part of this project, it would be another feature 
+added with future work. The method that would be used for leaf placement would use a combination of 
 approaches proposed by \cite{weber1995rendering} and \cite{bloomenthal1985modeling}. The \emph{level} 
 attribute of an Apex object, which tracks how far from the root an Apex is, would be used to decide 
 which branches to place leaves on. The furthest levels of the tree would be populated with leaves to 
@@ -806,7 +810,7 @@ branch it is on.
     \label{fig:leaf-placement}
 \end{figure}
 
-Another issue not remedied in this system is the problem of branches overlapping. This would be solved 
+Another behaviour that would be added is pruning of overlapping branches. This would be solved 
 as part of the cylinder generation process. Each cylinder would have to be checked by calculating 
 the local space taken up by the cylinder. Using the top and bottom termination points along with the 
 assigned widths of the cylinder you would then have to check if any other cylinders local space 
@@ -816,7 +820,7 @@ based on its \emph{level}, the higher level branch will be pruned because it wil
 the root and will likely have less child branches that also need to be pruned. The pruned branch 
 and all of its children must then be removed from the cylinder vector so that they will not be 
 loaded. The parent of the pruned branch must then have its top width reduced to 0 so that it 
-properly terminates and does not leave a flat termination point.
+properly ends and does not leave an open untextured cylinder at its termination point.
 
 The system should also make better utilization of hardware to increase performance. Currently when 
 trying to load multiple trees at once there is a noticeable slow down in the program. This slow down 
@@ -827,13 +831,17 @@ This would remove the deterministic nature of the L-system, but would create dif
 every time. This would be advantageous with the creation of scenes with multiple trees, because each tree will 
 look unique and give a more natural look to the environment.
 
+The possibilities with this system are broad and the current framework in place has been 
+specifically designed to allow for expansion. Future work would be able to add many new features to 
+produce detailed tree models.
+
 \section{Conclusion}
 From the methods proposed, complex branching structures can be produced using compact sets of data 
 passed to an L-system. The difficulties of modelling a tree shape manually are avoided and scenes 
 could be produced quickly and efficiently.
 
-L-systems were incepted for the representation of how organisms develop and are ideally suited to 
-form natural structures. The simulation of the randomness of biology is a field that will continue 
+L-systems were incepted for the representation of organism development and are ideally suited to 
+form natural structures. Simulation of the randomness of biology is a field that will continue 
 to expand as technology and understanding develop. L-systems have an important role in the history 
 of this research, and show their effectiveness with the ability to produce believable structures 
 even when compared to the results of modern systems. 
