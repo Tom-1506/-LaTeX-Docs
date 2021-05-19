@@ -2,6 +2,7 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{comment}
+\usepackage{rotating}
 \graphicspath{ {./images/} }
 
 \title{GPU Accelerated Method for Constructing and Rendering Trees}
@@ -543,6 +544,59 @@ vector is used to create lines ready to be rendered into a scene.
 The code pipeline has also been designed so that if new L-systems were needed then they could 
 be implemented as part of a new \emph{L-system} object. This was done to allow for future 
 adopters of the module to expand the source code to meet their requirements.
+
+\begin{cmpfigure}{Revised Gantt Chart from Project Proposal}[p]
+    \begin{sideways}
+    \newganttchartelement{voidbar}{
+    voidbar/.style={
+    draw=black,
+    top color=black!25,
+    bottom color=black!23
+    }}
+    \begin{ganttchart}[x unit=0.45cm, vgrid, title label font=\scriptsize,
+    canvas/.style={draw=black, dotted},
+    /pgfgantt/milestone left shift = 0,
+    /pgfgantt/milestone right shift = 0
+    ]{1}{34}
+    \gantttitle{Project schedule shown for e-vision week numbers
+     and semester week numbers}{34} \\
+    \gantttitlelist{9,...,42}{1}\\
+    \gantttitlelist{1,...,12}{1}
+    \gantttitle{CB}{4}
+    \gantttitle{AS}{2}
+    \gantttitlelist{1,...,8}{1}
+    \gantttitle{EB}{4}
+    \gantttitlelist{9,...,12}{1}\\
+    
+    
+    %the elements, bars and milestones, are identified as elem0, elem1, etc
+    
+    %elem1
+    \ganttbar{Project proposal}{1}{2}     \\  %elem0  
+    \ganttbar{Literature review}{3}{6}    \\  %elem1 
+    \ganttbar{Design}{6}{11}              \\  %elem2
+    
+    %week 1 of semester 2 is the 17th week in schedule 
+    \ganttbar{Coding}{12}{12}                 %elem3
+    \ganttvoidbar{}{13}{16}                   %elem4
+    \ganttbar{}{17}{20}                   \\  %elem5
+    
+    \ganttbar{Testing}{12}{12}                %elem6
+    \ganttvoidbar{}{13}{16}                   %elem7
+    \ganttbar{}{17}{26}                    \\ %elem8
+    \ganttmilestone{Code delivery}{26}    \\ %elem9
+    \ganttbar{Final report writing}{25}{30}        \\ %elem10
+    \ganttmilestone{Portfolio submission}{33}  \\ %elem11
+    \ganttbar{Inspection preparation}{31}{34}  %elem12
+    
+    
+    \ganttlink{elem0}{elem2} \ganttlink{elem1}{elem2} \ganttlink{elem2}{elem3}
+    \ganttlink[link mid=.25]{elem2}{elem6} \ganttlink{elem5}{elem6}
+    \ganttlink{elem8}{elem9} \ganttlink{elem9}{elem10}
+    \ganttlink{elem10}{elem11} \ganttlink{elem11}{elem12}
+    \end{ganttchart}
+    \end{sideways}
+\end{cmpfigure}
 
 \section{Analysis of Results}
 In this section, three different trees will be analysed for their performance and then analysed 

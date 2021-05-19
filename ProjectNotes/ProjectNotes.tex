@@ -1,5 +1,7 @@
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
+\usepackage{pgfgantt}
+\usepackage{rotating}
 
 \title{GPU Accelerated Method for Constructing and Rendering Trees 
         \\ - \\ 
@@ -251,6 +253,60 @@ This week I have been working on the report and am currently on schedule to fini
 content on time for Wednesday the 19th.
 
 \section*{Week 12 Sem 2, 17th May - 19th May, Deadline}
+The report and other supporting materials have been finalised and are ready to be submitted.
 
+\begin{figure}[p]
+        \begin{sideways}
+        \newganttchartelement{voidbar}{
+        voidbar/.style={
+        draw=black,
+        top color=black!25,
+        bottom color=black!23
+        }}
+        \begin{ganttchart}[x unit=0.45cm, vgrid, title label font=\scriptsize,
+        canvas/.style={draw=black, dotted},
+        /pgfgantt/milestone left shift = 0,
+        /pgfgantt/milestone right shift = 0
+        ]{1}{34}
+        \gantttitle{Project schedule shown for e-vision week numbers
+         and semester week numbers}{34} \\
+        \gantttitlelist{9,...,42}{1}\\
+        \gantttitlelist{1,...,12}{1}
+        \gantttitle{CB}{4}
+        \gantttitle{AS}{2}
+        \gantttitlelist{1,...,8}{1}
+        \gantttitle{EB}{4}
+        \gantttitlelist{9,...,12}{1}\\
+        
+        
+        %the elements, bars and milestones, are identified as elem0, elem1, etc
+        
+        %elem1
+        \ganttbar{Project proposal}{1}{2}     \\  %elem0  
+        \ganttbar{Literature review}{3}{6}    \\  %elem1 
+        \ganttbar{Design}{6}{11}              \\  %elem2
+        
+        %week 1 of semester 2 is the 17th week in schedule 
+        \ganttbar{Coding}{12}{12}                 %elem3
+        \ganttvoidbar{}{13}{16}                   %elem4
+        \ganttbar{}{17}{20}                   \\  %elem5
+        
+        \ganttbar{Testing}{12}{12}                %elem6
+        \ganttvoidbar{}{13}{16}                   %elem7
+        \ganttbar{}{17}{26}                    \\ %elem8
+        \ganttmilestone{Code delivery}{26}    \\ %elem9
+        \ganttbar{Final report writing}{25}{30}        \\ %elem10
+        \ganttmilestone{Portfolio submission}{33}  \\ %elem11
+        \ganttbar{Inspection preparation}{31}{34}  %elem12
+        
+        
+        \ganttlink{elem0}{elem2} \ganttlink{elem1}{elem2} \ganttlink{elem2}{elem3}
+        \ganttlink[link mid=.25]{elem2}{elem6} \ganttlink{elem5}{elem6}
+        \ganttlink{elem8}{elem9} \ganttlink{elem9}{elem10}
+        \ganttlink{elem10}{elem11} \ganttlink{elem11}{elem12}
+        \end{ganttchart}
+        \end{sideways}
+        \caption{Revised Gantt Chart from Project Proposal}
+    \end{figure}
 
 \end{document}
